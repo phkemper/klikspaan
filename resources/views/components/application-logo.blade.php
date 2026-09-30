@@ -1,1 +1,1 @@
-<img src="/img/klikspaan-logo.png" style="width:20px;height:20px;"/>
+<img src="/img/klikspaan-logo.png" style="width:40px;height:40px;"/>
