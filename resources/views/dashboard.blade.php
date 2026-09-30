@@ -11,20 +11,20 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
                           <defs>
                             <!-- Verloop voor de zwarte plastic buitenring / montagering -->
-                            <linearGradient id="outerBezel" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <linearGradient id="outerBezel{{ $button->id }}" x1="0%" y1="0%" x2="100%" y2="100%">
                               <stop offset="0%" stop-color="#333333" />
                               <stop offset="50%" stop-color="#1A1A1A" />
                               <stop offset="100%" stop-color="#0A0A0A" />
                             </linearGradient>
                         
                             <!-- Verloop voor de opstaande binnenste rand -->
-                            <linearGradient id="innerRim" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <linearGradient id="innerRim{{ $button->id }}" x1="0%" y1="0%" x2="0%" y2="100%">
                               <stop offset="0%" stop-color="#4F4F4F" />
                               <stop offset="100%" stop-color="#121212" />
                             </linearGradient>
                         
                             <!-- Radiaal verloop voor de rode plastic bolling (Big Dome) -->
-                            <radialGradient id="redDome" cx="35%" cy="35%" r="65%">
+                            <radialGradient id="redDome{{ $button->id }}" cx="35%" cy="35%" r="65%">
                               <stop offset="0%" stop-color="{{ $button->colors['on']['stop0'] }}" />
                               <stop offset="40%" stop-color="{{ $button->colors['on']['stop40'] }}" />
                               <stop offset="75%" stop-color="{{ $button->colors['on']['stop75'] }}" />
@@ -32,12 +32,12 @@
                             </radialGradient>
                         
                             <!-- Subtiele schaduw onder de buitenste rand -->
-                            <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+                            <filter id="dropShadow{{ $button->id }}" x="-10%" y="-10%" width="120%" height="120%">
                               <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
                             </filter>
                         
                             <!-- Diepteschaduw langs de binnenrand van de knop -->
-                            <filter id="domeInnerShadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <filter id="domeInnerShadow{{ $button->id }}" x="-20%" y="-20%" width="140%" height="140%">
                               <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur" />
                               <feOffset dx="0" dy="4" />
                               <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff" />
@@ -47,23 +47,23 @@
                             </filter>
                         
                             <!-- Subtiele schaduw onder de tekst -->
-                            <filter id="textShadow" x="-10%" y="-10%" width="120%" height="120%">
+                            <filter id="textShadow{{ $button->id }}" x="-10%" y="-10%" width="120%" height="120%">
                               <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.6" />
                             </filter>
                           </defs>
                         
                           <!-- 1. Buitenste zwarte rand (Housing) met schaduw -->
-                          <circle cx="150" cy="150" r="135" fill="url(#outerBezel)" filter="url(#dropShadow)" />
+                          <circle cx="150" cy="150" r="135" fill="url(#outerBezel{{ $button->id }})" filter="url(#dropShadow{{ $button->id }})" />
                         
                           <!-- 2. Groef / scheidingslijn tussen buitenring en knopbehuizing -->
                           <circle cx="150" cy="150" r="122" fill="#0D0D0D" />
-                          <circle cx="150" cy="150" r="120" fill="url(#innerRim)" />
+                          <circle cx="150" cy="150" r="120" fill="url(#innerRim{{ $button->id }})" />
                         
                           <!-- 3. Zwarte binnenste uitsparing waar de rode knop in valt -->
                           <circle cx="150" cy="150" r="105" fill="#050505" />
                         
                           <!-- 4. De rode dome knop -->
-                          <circle cx="150" cy="150" r="100" fill="url(#redDome)" filter="url(#domeInnerShadow)" />
+                          <circle cx="150" cy="150" r="100" fill="url(#redDome{{ $button->id }})" filter="url(#domeInnerShadow{{ $button->id }})" />
                         
                           <!-- 5. Glans / lichtreflectie van de plastic kap (bovenkant) -->
                           <path d="M 65 150 A 85 85 0 0 1 235 150 A 82 82 0 0 0 65 150 Z" fill="#FFFFFF" opacity="0.22" />
@@ -79,7 +79,7 @@
                             letter-spacing="3"
                             text-anchor="middle" 
                             dominant-baseline="central"
-                            filter="url(#textShadow)">
+                            filter="url(#textShadow{{ $button->id }})">
                             START
                           </text>
                         </svg>
@@ -87,20 +87,20 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
                           <defs>
                             <!-- Verloop voor de zwarte plastic buitenring / montagering -->
-                            <linearGradient id="outerBezelOff" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <linearGradient id="outerBezelOff{{ $button->id }}" x1="0%" y1="0%" x2="100%" y2="100%">
                               <stop offset="0%" stop-color="#333333" />
                               <stop offset="50%" stop-color="#1A1A1A" />
                               <stop offset="100%" stop-color="#0A0A0A" />
                             </linearGradient>
                         
                             <!-- Verloop voor de opstaande binnenste rand -->
-                            <linearGradient id="innerRimOff" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <linearGradient id="innerRimOff{{ $button->id }}" x1="0%" y1="0%" x2="0%" y2="100%">
                               <stop offset="0%" stop-color="#4F4F4F" />
                               <stop offset="100%" stop-color="#121212" />
                             </linearGradient>
                         
                             <!-- Radiaal verloop voor de rode plastic bolling (Big Dome) -->
-                            <radialGradient id="redDomeOff" cx="35%" cy="35%" r="65%">
+                            <radialGradient id="redDomeOff{{ $button->id }}" cx="35%" cy="35%" r="65%">
                               <stop offset="0%" stop-color="{{ $button->colors['off']['stop0'] }}" />
                               <stop offset="40%" stop-color="{{ $button->colors['off']['stop40'] }}" />
                               <stop offset="75%" stop-color="{{ $button->colors['off']['stop75'] }}" />
@@ -108,12 +108,12 @@
                             </radialGradient>
                         
                             <!-- Subtiele schaduw onder de buitenste rand -->
-                            <filter id="dropShadowOff" x="-10%" y="-10%" width="120%" height="120%">
+                            <filter id="dropShadowOff{{ $button->id }}" x="-10%" y="-10%" width="120%" height="120%">
                               <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
                             </filter>
                         
                             <!-- Diepteschaduw langs de binnenrand van de knop -->
-                            <filter id="domeInnerShadowOff" x="-20%" y="-20%" width="140%" height="140%">
+                            <filter id="domeInnerShadowOff{{ $button->id }}" x="-20%" y="-20%" width="140%" height="140%">
                               <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur" />
                               <feOffset dx="0" dy="4" />
                               <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff" />
@@ -123,23 +123,23 @@
                             </filter>
                         
                             <!-- Subtiele schaduw onder de tekst -->
-                            <filter id="textShadowOff" x="-10%" y="-10%" width="120%" height="120%">
+                            <filter id="textShadowOff{{ $button->id }}" x="-10%" y="-10%" width="120%" height="120%">
                               <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.6" />
                             </filter>
                           </defs>
                         
                           <!-- 1. Buitenste zwarte rand (Housing) met schaduw -->
-                          <circle cx="150" cy="150" r="135" fill="url(#outerBezelOff)" filter="url(#dropShadowOff)" />
+                          <circle cx="150" cy="150" r="135" fill="url(#outerBezelOff{{ $button->id }})" filter="url(#dropShadowOff{{ $button->id }})" />
                         
                           <!-- 2. Groef / scheidingslijn tussen buitenring en knopbehuizing -->
                           <circle cx="150" cy="150" r="122" fill="#0D0D0D" />
-                          <circle cx="150" cy="150" r="120" fill="url(#innerRimOff)" />
+                          <circle cx="150" cy="150" r="120" fill="url(#innerRimOff{{ $button->id }})" />
                         
                           <!-- 3. Zwarte binnenste uitsparing waar de rode knop in valt -->
                           <circle cx="150" cy="150" r="105" fill="#050505" />
                         
                           <!-- 4. De rode dome knop -->
-                          <circle cx="150" cy="150" r="100" fill="url(#redDomeOff)" filter="url(#domeInnerShadowOff)" />
+                          <circle cx="150" cy="150" r="100" fill="url(#redDomeOff{{ $button->id }})" filter="url(#domeInnerShadowOff{{ $button->id }})" />
                         
                           <!-- 5. Glans / lichtreflectie van de plastic kap (bovenkant) -->
                           <path d="M 65 150 A 85 85 0 0 1 235 150 A 82 82 0 0 0 65 150 Z" fill="#FFFFFF" opacity="0.22" />
@@ -155,7 +155,7 @@
                             letter-spacing="3"
                             text-anchor="middle" 
                             dominant-baseline="central"
-                            filter="url(#textShadowOff)">
+                            filter="url(#textShadowOff{{ $button->id }})">
                             STOP
                           </text>
                         </svg>
