@@ -51,7 +51,16 @@
         </header>
         <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
             <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-            	<img src="/img/klikspaan-logo.png" class="w-1/2"/>
+            	<h1>Klikspaan</h1>
+            	<img src="/img/klikspaan-logo.png" class="w-1/4"/>
+            	<p>Altijd al precies willen wetenhoe lang je slaapt? Of hoe lang je gewanderd hebt elke dag? Hoe lang je op het terras gezeten hebt?</p>
+            	<p>Registreer je dan met je e-mail en wachtwoord via de knop hieronder en maak zelf een start en stop knop aan.</p>
+            	<p>Klikspaan vertelt je dan hoe lang je iets hebt gedaan en laat je ook gemiddelden over 7 of 28 dagen zien.</p>
+            	<form method="get" target="{{ route('register') }}">
+            		<button type="submit" class="inline-block w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Registreer
+                    </button>
+            	</form>
             </main>
         </div>
 
