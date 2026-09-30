@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('moments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            
+            $table->foreignId('button_id')
+                ->constrained()
+                ->onDelete('cascade');
+            $table->boolean('state')->nullable()->default(null);
         });
     }
 
