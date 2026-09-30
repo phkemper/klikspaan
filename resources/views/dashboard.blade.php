@@ -24,11 +24,11 @@
                             </linearGradient>
                         
                             <!-- Radiaal verloop voor de rode plastic bolling (Big Dome) -->
-                            <radialGradient id="redDome" cx="35%" cy="35%" r="65%">
-                              <stop offset="0%" stop-color="#FF5D5D" />
-                              <stop offset="40%" stop-color="#EF4444" />
-                              <stop offset="75%" stop-color="#DC2626" />
-                              <stop offset="100%" stop-color="#880000" />
+                            <radialGradient id="redDomeOn" cx="35%" cy="35%" r="65%">
+                              <stop offset="0%" stop-color="{{ $button->colors['on']['stop0'] }}" />
+                              <stop offset="40%" stop-color="{{ $button->colors['on']['stop40'] }}" />
+                              <stop offset="75%" stop-color="{{ $button->colors['on']['stop75'] }}" />
+                              <stop offset="100%" stop-color="{{ $button->colors['on']['stop100'] }}" />
                             </radialGradient>
                         
                             <!-- Subtiele schaduw onder de buitenste rand -->
@@ -100,11 +100,11 @@
                             </linearGradient>
                         
                             <!-- Radiaal verloop voor de rode plastic bolling (Big Dome) -->
-                            <radialGradient id="redDome" cx="35%" cy="35%" r="65%">
-                              <stop offset="0%" stop-color="#FF5D5D" />
-                              <stop offset="40%" stop-color="#EF4444" />
-                              <stop offset="75%" stop-color="#DC2626" />
-                              <stop offset="100%" stop-color="#880000" />
+                            <radialGradient id="redDomeOff" cx="35%" cy="35%" r="65%">
+                              <stop offset="0%" stop-color="{{ $button->colors['off']['stop0'] }}" />
+                              <stop offset="40%" stop-color="{{ $button->colors['off']['stop40'] }}" />
+                              <stop offset="75%" stop-color="{{ $button->colors['off']['stop75'] }}" />
+                              <stop offset="100%" stop-color="{{ $button->colors['off']['stop100'] }}" />
                             </radialGradient>
                         
                             <!-- Subtiele schaduw onder de buitenste rand -->
