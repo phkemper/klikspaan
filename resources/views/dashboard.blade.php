@@ -24,7 +24,7 @@
                             </linearGradient>
                         
                             <!-- Radiaal verloop voor de rode plastic bolling (Big Dome) -->
-                            <radialGradient id="redDomeOn" cx="35%" cy="35%" r="65%">
+                            <radialGradient id="redDome" cx="35%" cy="35%" r="65%">
                               <stop offset="0%" stop-color="{{ $button->colors['on']['stop0'] }}" />
                               <stop offset="40%" stop-color="{{ $button->colors['on']['stop40'] }}" />
                               <stop offset="75%" stop-color="{{ $button->colors['on']['stop75'] }}" />
