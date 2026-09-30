@@ -49,18 +49,28 @@
                 </nav>
             @endif
         </header>
-        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-            <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-            	<h1>Klikspaan</h1>
-            	<img src="/img/klikspaan-logo.png" class="w-1/4"/>
-            	<p>Altijd al precies willen wetenhoe lang je slaapt? Of hoe lang je gewanderd hebt elke dag? Hoe lang je op het terras gezeten hebt?</p>
-            	<p>Registreer je dan met je e-mail en wachtwoord via de knop hieronder en maak zelf een start en stop knop aan.</p>
-            	<p>Klikspaan vertelt je dan hoe lang je iets hebt gedaan en laat je ook gemiddelden over 7 of 28 dagen zien.</p>
-            	<form method="get" target="{{ route('register') }}">
-            		<button type="submit" class="inline-block w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        Registreer
-                    </button>
-            	</form>
+        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0 px-4 py-8">
+            <main class="flex w-full max-w-4xl flex-col items-center text-center">
+                <!-- H1: Groot, vet, gecentreerd boven het plaatje -->
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                    Klikspaan
+                </h1>
+        
+                <!-- Afbeelding: Gecentreerd eronder -->
+                <img src="/img/klikspaan-logo.png" alt="Klikspaan Logo" class="w-32 sm:w-48 md:w-64 h-auto mb-8" />
+        
+                <!-- Paragrafen: Onder elkaar over de volle breedte (tot max-w-2xl voor optimale leesbaarheid) -->
+                <div class="w-full max-w-2xl space-y-4">
+                    <p class="text-base sm:text-lg text-gray-700 leading-relaxed">
+                        Altijd al precies willen weten hoe lang je slaapt? Of hoe lang je gewandeld hebt elke dag? Hoe lang je op het terras gezeten hebt?
+                    </p>
+                    <p class="text-base sm:text-lg text-gray-700 leading-relaxed">
+                        Registreer je dan met je e-mail en wachtwoord via de knop hierboven (eventueel achter de drie streepjes) en maak zelf een start en stop knop aan.
+                    </p>
+                    <p class="text-base sm:text-lg text-gray-700 leading-relaxed">
+                        Klikspaan vertelt je dan hoe lang je iets hebt gedaan en laat je ook gemiddelden over 7 of 28 dagen zien.
+                    </p>
+                </div>
             </main>
         </div>
 
