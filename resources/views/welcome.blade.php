@@ -68,7 +68,7 @@
                         Altijd al precies willen weten hoe lang je slaapt? Of hoe lang je gewandeld hebt elke dag? Hoe lang je op het terras gezeten hebt?
                     </p>
                     <p class="text-base sm:text-lg text-gray-700 leading-relaxed">
-                        Registreer je dan met je e-mail en wachtwoord via de knop hierboven (eventueel achter de drie streepjes) en maak zelf een start en stop knop aan.
+                        Registreer je dan met je e-mail en wachtwoord via de knop hierboven en maak zelf een start en stop knop aan.
                     </p>
                     <p class="text-base sm:text-lg text-gray-700 leading-relaxed">
                         Klikspaan vertelt je dan hoe lang je iets hebt gedaan en laat je ook gemiddelden over 7 of 28 dagen zien.
