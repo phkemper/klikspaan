@@ -23,7 +23,7 @@ class DashboardController extends Controller
         {
             // Get the current state of the buttons.
             $lastState = Moments::where('button_id', $button->id)
-            -orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'desc')
             ->first();
             $button->state = $lastState ? $lastState->state : false;
             // Get the colors for the button
