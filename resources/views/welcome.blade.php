@@ -49,18 +49,21 @@
                 </nav>
             @endif
         </header>
-        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0 px-4 py-8">
-            <main class="flex w-full max-w-4xl flex-col items-center text-center">
-                <!-- H1: Groot, vet, gecentreerd boven het plaatje -->
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+        <div class="w-full flex flex-col items-center justify-center text-center px-4 py-8">
+            <main class="w-full max-w-4xl flex flex-col items-center text-center">
+                
+                <!-- H1: Met expliciete inline-style voor de zekerheid als Tailwind-classes overschreven worden -->
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6" style="font-weight: 800; font-size: 2.5rem; display: block;">
                     Klikspaan
                 </h1>
         
-                <!-- Afbeelding: Gecentreerd eronder -->
-                <img src="/img/klikspaan-logo.png" alt="Klikspaan Logo" class="w-32 sm:w-48 md:w-64 h-auto mb-8" />
+                <!-- Afbeelding: Dwingt af om als blok onder de H1 te staan -->
+                <div class="w-full flex justify-center mb-6">
+                    <img src="/img/klikspaan-logo.png" alt="Klikspaan Logo" class="w-32 sm:w-48 md:w-64 h-auto block" />
+                </div>
         
-                <!-- Paragrafen: Onder elkaar over de volle breedte (tot max-w-2xl voor optimale leesbaarheid) -->
-                <div class="w-full max-w-2xl space-y-4">
+                <!-- Paragrafen: Dwingt af om onder de afbeelding te staan -->
+                <div class="w-full max-w-2xl flex flex-col space-y-4">
                     <p class="text-base sm:text-lg text-gray-700 leading-relaxed">
                         Altijd al precies willen weten hoe lang je slaapt? Of hoe lang je gewandeld hebt elke dag? Hoe lang je op het terras gezeten hebt?
                     </p>
@@ -71,9 +74,10 @@
                         Klikspaan vertelt je dan hoe lang je iets hebt gedaan en laat je ook gemiddelden over 7 of 28 dagen zien.
                     </p>
                 </div>
+        
             </main>
         </div>
-
+        
         @if (Route::has('login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif
