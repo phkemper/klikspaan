@@ -45,16 +45,16 @@ class Buttons extends Model
      */
     static public function generateButtonGradients($hexColor): array
     {
-        $rgb = hexToRgb($hexColor);
+        $rgb = self::hexToRgb($hexColor);
         $r = $rgb['r'];
         $g = $rgb['g'];
         $b = $rgb['b'];
         
         return [
-            'stop0'   => adjustColorBrightness($r, $g, $b, 1.25),  // Highlight (Lichter/Glans)
-            'stop40'  => adjustColorBrightness($r, $g, $b, 1.00),  // Basis RGB-kleur
-            'stop75'  => adjustColorBrightness($r, $g, $b, 0.80),  // Lichte schaduw
-            'stop100' => adjustColorBrightness($r, $g, $b, 0.45),  // Diepe rand-schaduw
+            'stop0'   => self::adjustColorBrightness($r, $g, $b, 1.25),  // Highlight (Lichter/Glans)
+            'stop40'  => self::adjustColorBrightness($r, $g, $b, 1.00),  // Basis RGB-kleur
+            'stop75'  => self::adjustColorBrightness($r, $g, $b, 0.80),  // Lichte schaduw
+            'stop100' => self::adjustColorBrightness($r, $g, $b, 0.45),  // Diepe rand-schaduw
         ];
     }
 }
