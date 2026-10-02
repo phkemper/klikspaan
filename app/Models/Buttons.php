@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Buttons extends Model
 {
@@ -105,5 +106,18 @@ class Buttons extends Model
                 $this->lastOff = date('m-d H:i', strtotime($prevState->created_at));
             }
         }
+    }
+    
+    /**
+     * Check if the button belongs to the logged in user.
+     */
+    public static function belongsToUser($id)
+    {
+        $button = Buttons::where('id', '=', $id)->first();
+        
+        if ( !$button ) return false;
+        if ( $button->user_id != Auth::id() ) return false;
+        
+        return true;
     }
 }

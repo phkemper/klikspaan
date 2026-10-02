@@ -10,89 +10,92 @@ use Carbon\Carbon;
 class Moments extends Model
 {
     /**
-     * Log the sleep time.
+     * Log the start time.
+     * @param int $id - Button ID.
      */
-    public static function sleep()
+    public static function start($id)
     {
         $moment = new Moments;
-        $moment->userid = Auth::id();
-        $moment->type = 'sleep';
+        $moment->button_id = $id;
+        $moment->state = 1;
         $moment->save();
     }
     
     /**
-     * Log the wakeup time.
+     * Log the stop time.
+     * @param int $id - Button ID.
      */
-    public static function wakeup()
+    public static function wakeup($id)
     {
         $moment = new Moments;
-        $moment->userid = Auth::id();
-        $moment->type = 'wakeup';
+        $moment->button_id = $id;
+        $moment->state = 0;
         $moment->save();
     }
     
     /**
      * Return last times buttons where pushed.
+     * @param int $id - Button ID.
      */
-    public static function getLastButtonTimes()
+    public static function getLastButtonTimes($id)
     {
         $userTimezone = auth()->user()->timezone ?? 'Europe/Amsterdam';
         $now = Carbon::now($userTimezone);
         $offsetInSeconds = $now->utcOffset() * 60;
         
-        $lastSleep = Moments::where('type', '=', 'sleep')
-        ->where('userid', '=', Auth::id())
+        $lastStart = Moments::where('state', '=', 1)
+        ->where('button_id', '=', $id)
         ->orderBy('created_at', 'desc')
         ->first();
-        if ( $lastSleep)
+        if ( $lastStart)
         {
-            $lastSleepTime = date('d-m H:i', strtotime($lastSleep->created_at) + $offsetInSeconds);
+            $lastStartTime = date('d-m H:i', strtotime($lastStart->created_at) + $offsetInSeconds);
         }
         else
         {
-            $lastSleepTime = '';
+            $lastStartTime = '';
         }
         
-        $lastWakeup = Moments::where('type', '=', 'wakeup')
-        ->where('userid', '=', Auth::id())
+        $lastStop = Moments::where('state', '=', 0)
+        ->where('button_id', '=', $id)
         ->orderBy('created_at', 'desc')
         ->first();
-        if ( $lastWakeup )
+        if ( $lastStop )
         {
-            $lastWakeupTime = date('d-m H:i', strtotime($lastWakeup->created_at) + $offsetInSeconds);
+            $lastStopTime = date('d-m H:i', strtotime($lastStop->created_at) + $offsetInSeconds);
         }
         else
         {
-            $lastWakeupTime = '';
+            $lastStopTime = '';
         }
         
         $lastState = Moments::orderBy('created_at', 'desc')->first();
-        $lastState = $lastState ? $lastState->type : '';
+        $lastState = $lastState ? $lastState->state : false;
         
         return (object)[
             'lastWakeup' => $lastWakeupTime,
             'lastSleep' => $lastSleepTime,
-            'type' => $lastState,
+            'state' => $lastState,
         ];
     }
     
     /**
      * Create a PNG graph based on the number of days requested.
      */
-    public static function createGraph($days)
+    public static function createGraph($button_id, $days)
     {
         // Get the data, ordered by create date/time.
         if ( $days > 0 )
         {
             $records = Moments::orderBy('created_at')
-            ->where('userid', '=', Auth::id())
+            ->where('button_id', '=', $button_id)
             ->where('created_at', '>=', now()->subDays($days))
             ->get();
         }
         else
         {
             $records = Moments::orderBy('created_at')
-            ->where('userid', '=', Auth::id())
+            ->where('button_id', '=', $button_id)
             ->get();
         }
         
@@ -153,74 +156,74 @@ class Moments extends Model
         };
         
         // 4. Gegevens groeperen in Slaap- en Ontwaaktijden (in seconden vanaf 12:00)
-        $sleepSeconds  = [];
-        $wakeSeconds   = [];
-        $sleepTime = [];
+        $startSeconds  = [];
+        $stopSeconds   = [];
+        $intervalTime = [];
         
-        // Paarsgewijs verwerken (sleep -> wakeup)
-        $lastSleep = null;
+        // Paarsgewijs verwerken (start -> stop)
+        $lastStart = null;
         foreach ($records as $record) {
-            if ($record->type === 'sleep') {
-                $lastSleep = $record->created_at;
-            } elseif ($record->type === 'wakeup' && $lastSleep !== null) {
-                $sleepSec = $getNormalizedSeconds($lastSleep);
-                $wakeSec  = $getNormalizedSeconds($record->created_at);
+            if ($record->state === 1) {
+                $lastStart = $record->created_at;
+            } elseif ($record->state === 0 && $lastStart !== null) {
+                $startSec = $getNormalizedSeconds($lastStart);
+                $stopSec  = $getNormalizedSeconds($record->created_at);
                 
-                // Borg dat ontwaken chronologisch na slapen ligt op de schaal
-                if ($wakeSec <= $sleepSec) {
-                    $wakeSec += 86400;
+                // Borg dat stoppen chronologisch na starten ligt op de schaal
+                if ($stopSec <= $startSec) {
+                    $stopSec += 86400;
                 }
                 
-                $sleepSeconds[] = $sleepSec;
-                $wakeSeconds[]  = $wakeSec;
-                $sleepTime[] = $wakeSec - $sleepSec;
-                $lastSleep = null;
+                $startSeconds[] = $startSec;
+                $stopSeconds[]  = $stopSec;
+                $intervalTime[] = $stopSec - $startSec;
+                $lastStart = null;
             }
         }
         
         // Als er voldoende data is, berekenen we de statistieken en tekenen we de grafiek
-        if (!empty($sleepSeconds) && !empty($wakeSeconds)) {
+        if (!empty($startSeconds) && !empty($stopSeconds)) {
             
-            // Statistieken voor Slapen
-            $minSleep = min($sleepSeconds);
-            $maxSleep = max($sleepSeconds);
-            $avgSleep = array_sum($sleepSeconds) / count($sleepSeconds);
+            // Statistieken voor starten
+            $minStart = min($startSeconds);
+            $maxStart = max($startSeconds);
+            $avgStart = array_sum($startSeconds) / count($startSeconds);
             
-            // Statistieken voor Ontwaken
-            $minWake = min($wakeSeconds);
-            $maxWake = max($wakeSeconds);
-            $avgWake = array_sum($wakeSeconds) / count($wakeSeconds);
+            // Statistieken voor stoppen
+            $minStop = min($stopSeconds);
+            $maxStop = max($stopSeconds);
+            $avgStop = array_sum($stopSeconds) / count($stopSeconds);
             
             $minTime = min($sleepTime);
             $maxTime = max($sleepTime);
             $avgTime = array_sum($sleepTime) / count($sleepTime);
             
             // Omzetten naar X-coördinaten
-            $xMinSleep = $secondsToX($minSleep);
-            $xMaxSleep = $secondsToX($maxSleep);
-            $xAvgSleep = $secondsToX($avgSleep);
+            $xMinStart = $secondsToX($minStart);
+            $xMaxStart = $secondsToX($maxStart);
+            $xAvgStart = $secondsToX($avgStart);
             
-            $xMinWake  = $secondsToX($minWake);
-            $xMaxWake  = $secondsToX($maxWake);
-            $xAvgWake  = $secondsToX($avgWake);
+            $xMinStop  = $secondsToX($minStop);
+            $xMaxStop  = $secondsToX($maxStop);
+            $xAvgStop  = $secondsToX($avgStop);
             
             // --- TEKENEN VAN DE BLOKKEN ---
             
-            // A. Donkergrijs blok aan de linkerkant (Vroegste sleep t/m Laatste sleep)
-            imagefilledrectangle($image, $xMinSleep, $blockTop, $xMaxSleep, $blockBottom, $rangeBlockColor);
+            // A. Donkergrijs blok aan de linkerkant (Vroegste start t/m Laatste start)
+            imagefilledrectangle($image, $xMinStart, $blockTop, $xMaxStart, $blockBottom, $rangeBlockColor);
             
-            // B. Grijs blok in het midden (Gemiddelde sleep t/m Gemiddelde wakeup)
-            imagefilledrectangle($image, $xMaxSleep, $blockTop, $xMinWake, $blockBottom, $mainBlockColor);
+            // B. Grijs blok in het midden (Gemiddelde start t/m Gemiddelde stop)
+            imagefilledrectangle($image, $xMaxStart, $blockTop, $xMinStop, $blockBottom, $mainBlockColor);
             
-            // C. Donkergrijs blok aan de rechterkant (Vroegste wakeup t/m Laatste wakeup)
-            imagefilledrectangle($image, $xMinWake, $blockTop, $xMaxWake, $blockBottom, $rangeBlockColor);
+            // C. Donkergrijs blok aan de rechterkant (Vroegste stop t/m Laatste stop)
+            imagefilledrectangle($image, $xMinStop, $blockTop, $xMaxStop, $blockBottom, $rangeBlockColor);
             
-            // D. Zwarte verticale lijn op het gemiddelde Slaap-uur
+            // D. Zwarte verticale lijn op het gemiddelde start-uur
             imagesetthickness($image, 6);
-            imageline($image, $xAvgSleep, $blockTop - 10, $xAvgSleep, $blockBottom + 10, $avgLineColor);
+            imageline($image, $xAvgStart, $blockTop - 10, $xAvgStart, $blockBottom + 10, $avgLineColor);
             
-            // E. Zwarte verticale lijn op het gemiddelde Ontwaak-uur
-            imageline($image, $xAvgWake, $blockTop - 10, $xAvgWake, $blockBottom + 10, $avgLineColor);
+            // E. Zwarte verticale lijn op het gemiddelde stop-uur
+            imageline($image, $xAvgStop, $blockTop - 10, $xAvgStop, $blockBottom + 10, $avgLineColor);
         }
         
         // 5. Horizontale as en uurmarkeringen (12:00 t/m 12:00)
