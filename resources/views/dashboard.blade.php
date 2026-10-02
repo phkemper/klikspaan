@@ -35,7 +35,7 @@
                                     <radialGradient id="redDome{{ $button->id }}" cx="35%" cy="35%" r="65%">
                                       <stop offset="0%" stop-color="{{ $button->colors['on']['stop0'] }}" />
                                       <stop offset="40%" stop-color="{{ $button->colors['on']['stop40'] }}" />
-                                      <stop offset="75%" stop-color="{{ $button->colors['on']['stop75'] }}" />
+                                      <stop offset="75%" stop-color="{{ $button-11:00>colors['on']['stop75'] }}" />
                                       <stop offset="100%" stop-color="{{ $button->colors['on']['stop100'] }}" />
                                     </radialGradient>
                                 
@@ -93,7 +93,7 @@
                                 </svg>
                                 <!-- Gecentreerde tekst onder de linker knop -->
                                 <span class="mt-2 text-sm md:text-base font-semibold text-gray-700 dark:text-gray-300 text-center">
-                                    09:00
+                                    {{ $button->lastOn }}
                                 </span>
         					</div>
         						
@@ -178,15 +178,15 @@
     
                         		<!-- Gecentreerde tekst onder de rechter knop -->
                                 <span class="mt-2 text-sm md:text-base font-semibold text-gray-700 dark:text-gray-300 text-center">
-                                    11:00
+                                    {{ $button->lastOff }}
                                 </span>
                             </div>
                         </div>
                         <div class="flex justify-center mt-2 gap-[4%]">
-                            <a href="#" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
+                            <a href="/graph?id={{ $button->id }}" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
                                 Grafiek
                             </a>
-                            <a href="#" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
+                            <a href="/setting?id={{ $button->id }}" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
                                 Bewerken
                             </a>
                         </div>

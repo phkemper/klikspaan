@@ -21,6 +21,8 @@ class DashboardController extends Controller
         
         foreach ( $buttons as $button )
         {
+            $button->lastOn = '';
+            $button->lastOff = '';
             // Get the current state of the buttons.
             $lastState = Moments::where('button_id', $button->id)
             ->orderBy('created_at', 'desc')
@@ -33,6 +35,15 @@ class DashboardController extends Controller
                     'off' => Buttons::generateButtonGradients($button->color),
                     'on' => Buttons::generateButtonGradients('#808080'),
                 ];
+                $button->lastOn = date('m-d H:i', strtotime($lastState->created_at));
+                $prevState = Moments::where('button_id', $button->id)
+                ->limit(1,1)
+                ->orderBy('created_at', 'desc')
+                ->first();
+                if ( $prevState )
+                {
+                    $button->lastOff = date('m-d H:i', strtotime($prevState->created_at));
+                }
             }
             else
             {
@@ -40,6 +51,15 @@ class DashboardController extends Controller
                     'off' => Buttons::generateButtonGradients('#808080'),
                     'on' => Buttons::generateButtonGradients($button->color),
                 ];
+                $button->lastOff = date('m-d H:i', strtotime($lastState));
+                $prevState = Moments::where('button_id', $button->id)
+                ->limit(1,1)
+                ->orderBy('created_at', 'desc')
+                ->first();
+                if ( $prevState )
+                {
+                    $button->lastOn = date('m-d H:i', strtotime($prevState->created_at));
+                }
             }
         }
         return view('dashboard', [
