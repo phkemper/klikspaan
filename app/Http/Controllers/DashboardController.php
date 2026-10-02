@@ -21,49 +21,9 @@ class DashboardController extends Controller
         
         foreach ( $buttons as $button )
         {
-            $button->lastOn = '';
-            $button->lastOff = '';
-            // Get the current state of the buttons.
-            $lastState = Moments::where('button_id', $button->id)
-            ->orderBy('created_at', 'desc')
-            ->first();
-            $button->state = $lastState ? $lastState->state : false;
-            // Get the colors for the button
-            if ( $button->state )
-            {
-                $button->colors = [
-                    'off' => Buttons::generateButtonGradients($button->color),
-                    'on' => Buttons::generateButtonGradients('#808080'),
-                ];
-                $prevState = Moments::where('button_id', $button->id)
-                ->limit(1,1)
-                ->orderBy('created_at', 'desc')
-                ->first();
-                if ( $prevState )
-                {
-                    $button->lastOn = date('m-d H:i', strtotime($prevState->created_at));
-                }
-            }
-            else
-            {
-                $button->colors = [
-                    'off' => Buttons::generateButtonGradients('#808080'),
-                    'on' => Buttons::generateButtonGradients($button->color),
-                ];
-                if ( $lastState )
-                {
-                    $button->lastOff = date('m-d H:i', strtotime($lastState));
-                }
-                $prevState = Moments::where('button_id', $button->id)
-                ->limit(1,1)
-                ->orderBy('created_at', 'desc')
-                ->first();
-                if ( $prevState )
-                {
-                    $button->lastOff = date('m-d H:i', strtotime($prevState->created_at));
-                }
-            }
+            $button->getDetails();
         }
+        
         return view('dashboard', [
             'buttons' => $buttons,
         ]);

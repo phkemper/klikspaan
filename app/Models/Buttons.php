@@ -57,4 +57,53 @@ class Buttons extends Model
             'stop100' => self::adjustColorBrightness($r, $g, $b, 0.45),  // Diepe rand-schaduw
         ];
     }
+    
+    /**
+     * Get the details about the state and times.
+     */
+    public function getDetails()
+    {
+        $this->lastOn = '&nbsp;';
+        $this->lastOff = '&nbsp;';
+        // Get the current state of the buttons.
+        $lastState = Moments::where('button_id', $this->id)
+        ->orderBy('created_at', 'desc')
+        ->first();
+        $this->state = $lastState ? $lastState->state : false;
+        // Get the colors for the button
+        if ( $this->state )
+        {
+            $this->colors = [
+                'off' => Buttons::generateButtonGradients($this->color),
+                'on' => Buttons::generateButtonGradients('#808080'),
+            ];
+            $prevState = Moments::where('button_id', $this->id)
+            ->limit(1,1)
+            ->orderBy('created_at', 'desc')
+            ->first();
+            if ( $prevState )
+            {
+                $this->lastOn = date('m-d H:i', strtotime($prevState->created_at));
+            }
+        }
+        else
+        {
+            $this->colors = [
+                'off' => Buttons::generateButtonGradients('#808080'),
+                'on' => Buttons::generateButtonGradients($this->color),
+            ];
+            if ( $lastState )
+            {
+                $this->lastOff = date('m-d H:i', strtotime($lastState));
+            }
+            $prevState = Moments::where('button_id', $this->id)
+            ->limit(1,1)
+            ->orderBy('created_at', 'desc')
+            ->first();
+            if ( $prevState )
+            {
+                $this->lastOff = date('m-d H:i', strtotime($prevState->created_at));
+            }
+        }
+    }
 }
