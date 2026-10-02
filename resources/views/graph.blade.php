@@ -6,7 +6,7 @@
     <div class="w-full flex flex-col items-center gap-3 sm:gap-4">
         <div class="flex flex-row justify-center gap-3 sm:gap-4 w-full">
             <div class="w-1/4 sm:w-1/4 flex flex-col items-center">
-            	<a href="{{ $days == 1 ? '#' : '/graph?days=1' }}" 
+            	<a href="{{ $days == 1 ? '#' : '/graph?days=1&id='.$id }}" 
                    @if($days==1) tabindex="-1" aria-disabled="true" @endif
                    class="w-full inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 
                           {{ $days==1 
@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="w-1/4 sm:w-1/4 flex flex-col items-center">
-            	<a href="{{ $days == 7 ? '#' : '/graph?days=7' }}" 
+            	<a href="{{ $days == 7 ? '#' : '/graph?days=7&id='.$id }}" 
                    @if($days==7) tabindex="-1" aria-disabled="true" @endif
                    class="w-full inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 
                           {{ $days==7 
@@ -26,7 +26,7 @@
                 </a>
             </div>
             <div class="w-1/4 sm:w-1/4 flex flex-col items-center">
-            	<a href="{{ $days == 28 ? '#' : '/graph?days=28' }}" 
+            	<a href="{{ $days == 28 ? '#' : '/graph?days=28&id='.$id }}" 
                    @if($days==28) tabindex="-1" aria-disabled="true" @endif
                    class="w-full inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 
                           {{ $days==28 
@@ -36,7 +36,7 @@
                 </a>
             </div>
             <div class="w-1/4 sm:w-1/4 flex flex-col items-center">
-            	<a href="{{ $days == 0 ? '#' : '/graph?days=0' }}" 
+            	<a href="{{ $days == 0 ? '#' : '/graph?days=0&id='.$id }}" 
                    @if($days==0) tabindex="-1" aria-disabled="true" @endif
                    class="w-full inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 
                           {{ $days==0 

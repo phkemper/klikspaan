@@ -16,7 +16,8 @@ class GraphController extends Controller
      */
     public function index(Request $request)
     {
-        if ( !Buttons::belongsToUser($request->input('id',0)) )
+        $buttonId = $request->input('id',0);
+        if ( !Buttons::belongsToUser($buttonId) )
         {
             redirect(route('dashboard'));
         }
@@ -32,6 +33,6 @@ class GraphController extends Controller
             redirect(route('dashboard'));
         }
         
-        return view('graph', ['days' => $days, 'graph' => $graph,]);
+        return view('graph', ['id' => $buttonId, 'days' => $days, 'graph' => $graph,]);
     }
 }
