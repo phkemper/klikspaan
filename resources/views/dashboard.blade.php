@@ -94,7 +94,7 @@
                                 </svg>
                                 <!-- Gecentreerde tekst onder de linker knop -->
                                 <span class="mt-2 text-sm md:text-base font-semibold text-gray-700 dark:text-gray-300 text-center">
-                                    {{ $button->lastOn }}
+                                    {!! $button->lastOn !!}
                                 </span>
         					</div>
         						
@@ -179,7 +179,7 @@
     
                         		<!-- Gecentreerde tekst onder de rechter knop -->
                                 <span class="mt-2 text-sm md:text-base font-semibold text-gray-700 dark:text-gray-300 text-center">
-                                    {{ $button->lastOff }}
+                                    {!! $button->lastOff !!}
                                 </span>
                             </div>
                         </div>
