@@ -183,7 +183,7 @@
                             </div>
                         </div>
                         <div class="flex justify-center mt-2">
-                            <a href="#" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow transition-colors text-center">
+                            <a href="#" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-yellow-400 active:text-black rounded-lg shadow transition-colors text-center">
                                 Details bekijken
                             </a>
                         </div>
