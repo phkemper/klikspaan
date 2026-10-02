@@ -183,9 +183,9 @@
                             </div>
                         </div>
                         <div class="flex justify-center mt-2">
-                            <button type="button" class="px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow transition-colors">
+                            <a href="#" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow transition-colors text-center">
                                 Details bekijken
-                            </button>
+                            </a>
                         </div>
                     </div> 
                 @endforeach
