@@ -184,10 +184,10 @@
                             </div>
                         </div>
                         <div class="flex justify-center mt-2 gap-[4%]">
-                            <a href="/graph?id={{ $button->id }}" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
+                            <a href="/graph?id={{ $button->id }}" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
                                 Grafiek
                             </a>
-                            <a href="/setting?id={{ $button->id }}" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
+                            <a href="/setting?id={{ $button->id }}" class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
                                 Bewerken
                             </a>
                         </div>
