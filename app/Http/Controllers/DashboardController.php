@@ -41,7 +41,7 @@ class DashboardController extends Controller
                 ->first();
                 if ( $prevState )
                 {
-                    $button->lastOff = date('m-d H:i', strtotime($prevState->created_at));
+                    $button->lastOn = date('m-d H:i', strtotime($prevState->created_at));
                 }
             }
             else
@@ -57,7 +57,7 @@ class DashboardController extends Controller
                 ->first();
                 if ( $prevState )
                 {
-                    $button->lastOn = date('m-d H:i', strtotime($prevState->created_at));
+                    $button->lastOff = date('m-d H:i', strtotime($prevState->created_at));
                 }
             }
         }
