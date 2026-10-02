@@ -35,7 +35,7 @@
                                     <radialGradient id="redDome{{ $button->id }}" cx="35%" cy="35%" r="65%">
                                       <stop offset="0%" stop-color="{{ $button->colors['on']['stop0'] }}" />
                                       <stop offset="40%" stop-color="{{ $button->colors['on']['stop40'] }}" />
-                                      <stop offset="75%" stop-color="{{ $button-11:00>colors['on']['stop75'] }}" />
+                                      <stop offset="75%" stop-color="{{ $button->colors['on']['stop75'] }}" />
                                       <stop offset="100%" stop-color="{{ $button->colors['on']['stop100'] }}" />
                                     </radialGradient>
                                 
@@ -45,7 +45,8 @@
                                     </filter>
                                 
                                     <!-- Diepteschaduw langs de binnenrand van de knop -->
-                                    <filter id="domeInnerShadow{{ $button->id }}" x="-20%" y="-20%" width="140%" height="140%">
+                                    <                $button->lastOn = date('m-d H:i', strtotime($lastState->created_at));
+                                    filter id="domeInnerShadow{{ $button->id }}" x="-20%" y="-20%" width="140%" height="140%">
                                       <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur" />
                                       <feOffset dx="0" dy="4" />
                                       <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff" />
