@@ -4,7 +4,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 @foreach ( $buttons as $button )
-                	<div class="max-w-xl mx-auto p-6 bg-gray-100 dark:bg-gray-800/50 rounded-2xl shadow-lg border border-gray-200/60 dark:border-gray-700/50">
+                	<div class="max-w-xl mx-[5%] p-6 bg-gray-100 dark:bg-gray-800/50 rounded-2xl shadow-lg border border-gray-200/60 dark:border-gray-700/50">
                         <!-- 1. H1 titel gecentreerd bovenaan -->
                         <h1 class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100 mb-6">
                             {{ $button->name }}
