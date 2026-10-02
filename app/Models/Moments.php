@@ -194,9 +194,9 @@ class Moments extends Model
             $maxStop = max($stopSeconds);
             $avgStop = array_sum($stopSeconds) / count($stopSeconds);
             
-            $minTime = min($startTime);
-            $maxTime = max($startTime);
-            $avgTime = array_sum($startTime) / count($startTime);
+            $minTime = min($intervalTime);
+            $maxTime = max($intervalTime);
+            $avgTime = array_sum($intervalTime) / count($intervalTime);
             
             // Omzetten naar X-coördinaten
             $xMinStart = $secondsToX($minStart);
