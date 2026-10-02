@@ -88,6 +88,7 @@
                                 text-anchor="middle" 
                                 dominant-baseline="central"
                                 filter="url(#textShadow{{ $button->id }})">
+                              	START
                               </text>
                             </svg>
                             <!-- Gecentreerde tekst onder de linker knop -->
@@ -179,11 +180,11 @@
                             <span class="mt-2 text-sm md:text-base font-semibold text-gray-700 dark:text-gray-300 text-center">
                                 11:00
                             </span>
-                        </div>
-                        <div class="flex justify-center mt-2">
-                            <button type="button" class="px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow transition-colors">
-                                Details bekijken
-                            </button>
+                            <div class="flex justify-center mt-2">
+                                <button type="button" class="px-4 py-2 text-xs md:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow transition-colors">
+                                    Details bekijken
+                                </button>
+                            </div>
                         </div>
                     </div>
                 @endforeach
