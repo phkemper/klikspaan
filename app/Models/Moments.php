@@ -250,9 +250,9 @@ class Moments extends Model
             imagettftext($image, $fontSize, $angle, $x - 25, $axisY + $fontSize + 15, $textColor, $fontPath, $hourText);
         }
         
-        $times = 'Min: ' . date('H:m', $minTime) .
-        ' Gem: ' . date('H:m', $avgTime) .
-        ' Max: ' . date('H:m', $maxTime);
+        $times = 'Min: ' . (empty($minTime) ? '-' : date('H:m', $minTime)) .
+        ' Gem: ' . (empty($avgTime) ? '-' : date('H:m', $avgTime)) .
+        ' Max: ' . (empty($maxTime) ? '-' : date('H:m', $maxTime));
         $bbox = imagettfbbox($fontSize, $angle, $fontPath, $times);
         $boxWidth = abs($bbox[2] - $bbox[0]);
         imagettftext($image, $fontSize, $angle, $width / 2 - $boxWidth / 2, 10 + $fontSize, $textColor, $fontPath, $times);
