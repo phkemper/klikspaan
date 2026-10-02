@@ -50,7 +50,10 @@ class DashboardController extends Controller
                     'off' => Buttons::generateButtonGradients('#808080'),
                     'on' => Buttons::generateButtonGradients($button->color),
                 ];
-                $button->lastOff = date('m-d H:i', strtotime($lastState));
+                if ( $lastState )
+                {
+                    $button->lastOff = date('m-d H:i', strtotime($lastState));
+                }
                 $prevState = Moments::where('button_id', $button->id)
                 ->limit(1,1)
                 ->orderBy('created_at', 'desc')
