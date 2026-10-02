@@ -181,11 +181,11 @@
                                     11:00
                                 </span>
                             </div>
-                            <div class="flex justify-center mt-2">
-                                <button type="button" class="px-4 py-2 text-xs md:text-sm font-medium text-black bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow transition-colors">
-                                    Details bekijken
-                                </button>
-                            </div>
+                        </div>
+                        <div class="flex justify-center mt-2">
+                            <button type="button" class="px-4 py-2 text-xs md:text-sm font-medium text-black bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow transition-colors">
+                                Details bekijken
+                            </button>
                         </div>
                     </div> 
                 @endforeach
