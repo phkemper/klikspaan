@@ -16,7 +16,7 @@
     					<!-- Linker kolom: START knop + tekst -->
                         <div class="flex flex-col items-center">
                             <!-- SVG Start Knop -->
-	                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+	                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" class="w-full h-auto max-w-full">
                               <defs>
                                 <!-- Verloop voor de zwarte plastic buitenring / montagering -->
                                 <linearGradient id="outerBezel{{ $button->id }}" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -99,7 +99,7 @@
             			<!-- Rechter kolom: STOP knop + tekst -->
     					<div class="flex flex-col items-center">
                     		<!-- SVG Stop Knop -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" class="w-full h-auto max-w-full">
                               <defs>
                                 <!-- Verloop voor de zwarte plastic buitenring / montagering -->
                                 <linearGradient id="outerBezelOff{{ $button->id }}" x1="0%" y1="0%" x2="100%" y2="100%">
