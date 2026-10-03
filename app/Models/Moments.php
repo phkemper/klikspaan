@@ -98,7 +98,7 @@ class Moments extends Model
             ->where('button_id', '=', $button_id)
             ->get();
         }
-        
+        dump($records);die;
         // Convert the create date/time to local timezone.
         $userTimezone = auth()->user()->timezone ?? 'Europe/Amsterdam';
         $now = Carbon::now($userTimezone);
