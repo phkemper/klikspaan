@@ -84,16 +84,16 @@ class Buttons extends Model
         if ( $this->state )
         {
             $this->colors = [
-                'off' => Buttons::generateButtonGradients($this->color),
-                'on' => Buttons::generateButtonGradients('#808080'),
+                'on' => Buttons::generateButtonGradients($this->color),
+                'off' => Buttons::generateButtonGradients('#808080'),
             ];
             $this->lastOn = date('m-d H:i', strtotime($this->created_at) + $offsetInSeconds);
         }
         else
         {
             $this->colors = [
-                'on' => Buttons::generateButtonGradients('#808080'),
-                'off' => Buttons::generateButtonGradients($this->color),
+                'off' => Buttons::generateButtonGradients('#808080'),
+                'on' => Buttons::generateButtonGradients($this->color),
             ];
             $this->lastOff = date('m-d H:i', strtotime($this->created_at) + $offsetInSeconds);
         }
