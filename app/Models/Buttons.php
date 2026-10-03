@@ -84,33 +84,28 @@ class Buttons extends Model
                 'off' => Buttons::generateButtonGradients($this->color),
                 'on' => Buttons::generateButtonGradients('#808080'),
             ];
-            $prevState = Moments::where('button_id', $this->id)
-            ->limit(1,1)
-            ->orderBy('created_at', 'desc')
-            ->first();
-            if ( $prevState )
-            {
-                $this->lastOn = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
-            }
+            $this->lastOn = date('m-d H:i', strtotime($this->created_at) + $offsetInSeconds);
         }
         else
         {
             $this->colors = [
-                'off' => Buttons::generateButtonGradients('#808080'),
-                'on' => Buttons::generateButtonGradients($this->color),
+                'on' => Buttons::generateButtonGradients('#808080'),
+                'off' => Buttons::generateButtonGradients($this->color),
             ];
-            if ( $lastState )
-            {
-                $this->lastOff = date('m-d H:i', strtotime($lastState));
-            }
-            $prevState = Moments::where('button_id', $this->id)
-            ->limit(1,1)
-            ->orderBy('created_at', 'desc')
-            ->first();
-            if ( $prevState )
-            {
-                $this->lastOff = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
-            }
+            $this->lastOff = date('m-d H:i', strtotime($this->created_at) + $offsetInSeconds);
+        }
+        // Get the time of the last state.
+        $prevState = Moments::where('button_id', $this->id)
+        ->where('state', '=', $this->state ? 0 : 1)
+        ->orderBy('created_at', 'desc')
+        ->first();
+        if ( $prevState && $prevState->state )
+        {
+            $this->lastOn = date('m-d H:i', strtotime($prevSTate->created_at) + $offsetInSeconds);
+        }
+        elseif ( $prevState)
+        {
+            $this->lastOff = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
         }
     }
     
