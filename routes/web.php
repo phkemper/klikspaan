@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/graph', [GraphController::class, 'index'])->name('graph');
 
     Route::get('/setting', [SettingController::class, 'index'])->name('setting');
+    Route::get('/setting/create', [SettingController::class, 'create'])->name('create');
+    Route::get('/setting/update', [SettingController::class, 'update'])->name('update');
+    Route::get('/setting/delete', [SettingController::class, 'delete'])->name('delete');
     
 });
 

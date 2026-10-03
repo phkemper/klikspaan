@@ -5,7 +5,7 @@
         <!-- Bovenste knop: Maak nieuwe klikspaan -->
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-xl font-bold text-gray-800 dark:text-white">Instellingen - Klikspanen</h1>
-            <a href="{{ route('buttons.create') }}" class="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
+            <a href="{{ route('create') }}" class="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
                 Maak nieuwe klikspaan
             </a>
         </div>
@@ -30,12 +30,12 @@
                             <!-- Kolom 2: Knoppen (Aanpassen & Verwijderen) -->
                             <td class="px-6 py-4 text-right space-x-2 whitespace-nowrap">
                                 <!-- Blauwe knop: Aanpassen -->
-                                <a href="{{ route('buttons.edit') }}?button_id={{ $button->id }}" class="inline-block px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
+                                <a href="{{ route('update') }}?button_id={{ $button->id }}" class="inline-block px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
                                     Aanpassen
                                 </a>
     
                                 <!-- Rode knop: Verwijderen -->
-                                <a href="{{ route('buttons.delete') }}?button_id={{ $button->id }}" class="inline-block px-3 py-1.5 text-xs font-medium text-white bg-red-600 hover:bg-red-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
+                                <a href="{{ route('delete') }}?button_id={{ $button->id }}" class="inline-block px-3 py-1.5 text-xs font-medium text-white bg-red-600 hover:bg-red-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
                                     Verwijderen
                                 </a>
                             </td>
