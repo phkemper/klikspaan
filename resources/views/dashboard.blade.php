@@ -15,7 +15,7 @@
         				
         					<!-- Linker kolom: START knop + tekst -->
                             <div class="flex flex-col items-center">
-                            	<a href="{{ route('start', ['i' => $button->id]) }}">
+                            	<a href="{{ route('start', ['button_id' => $button->id]) }}">
                                 <!-- SVG Start Knop -->
     	                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" class="w-full h-auto max-w-full">
                                   <defs>
@@ -102,7 +102,7 @@
         						
                 			<!-- Rechter kolom: STOP knop + tekst -->
         					<div class="flex flex-col items-center">
-        						<a href="{{ route('stop', ['i' => $button->id]) }}">
+        						<a href="{{ route('stop', ['button_id' => $button->id]) }}">
                         		<!-- SVG Stop Knop -->
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" class="w-full h-auto max-w-full">
                                   <defs>

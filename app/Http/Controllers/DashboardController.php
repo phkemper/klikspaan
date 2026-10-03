@@ -28,4 +28,33 @@ class DashboardController extends Controller
             'buttons' => $buttons,
         ]);
     }
+    
+    /**
+     * Register the start time.
+     */
+    public function start($button_id)
+    {
+        $moment = new Moments;
+        $moment->user_id = Auth::id();
+        $moment->button_id = $button_id;
+        $moment->state = true;
+        $moment->save();
+        
+        return redirect(route('dashboard'));
+    }
+    
+    /**
+     * Register the stop time.
+     */
+    public function stop($button_id)
+    {
+        $moment = new Moments;
+        $moment->user_id = Auth::id();
+        $moment->button_id = $button_id;
+        $moment->state = false;
+        $moment->save();
+        
+        return redirect(route('dashboard'));
+    }
+    
 }
