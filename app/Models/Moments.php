@@ -85,15 +85,12 @@ class Moments extends Model
     public static function createGraph($button_id, $days)
     {
         // Get the data, ordered by create date/time.
-        if ( $days > 0 )
-        {
+        if ($days > 0) {
             $records = Moments::orderBy('created_at')
             ->where('button_id', '=', $button_id)
             ->where('created_at', '>=', now()->subDays($days))
             ->get();
-        }
-        else
-        {
+        } else {
             $records = Moments::orderBy('created_at')
             ->where('button_id', '=', $button_id)
             ->get();
@@ -104,8 +101,7 @@ class Moments extends Model
         $now = Carbon::now($userTimezone);
         $offsetInSeconds = $now->utcOffset() * 60;
         
-        foreach ( $records as $record )
-        {
+        foreach ($records as $record) {
             $record->created_at = date('Y-m-d H:i:s', strtotime($record->created_at) + $offsetInSeconds);
         }
         
@@ -115,12 +111,12 @@ class Moments extends Model
         $image  = imagecreatetruecolor($width, $height);
         
         // 2. Kleuren
-        $bgColor         = imagecolorallocate($image, 245, 247, 250); // Neutrale achtergrond
-        $mainBlockColor  = imagecolorallocate($image, 200, 205, 212); // Grijs (gemiddeld blok)
-        $rangeBlockColor = imagecolorallocate($image, 110, 120, 135); // Donkergrijs (min-max bereik)
-        $avgLineColor    = imagecolorallocate($image, 0, 0, 0);        // Zwart (gemiddelde lijn)
-        $axisColor       = imagecolorallocate($image, 80, 80, 80);     // Askleur
-        $textColor       = imagecolorallocate($image, 40, 40, 40);     // Tekstkleur
+        $bgColor         = imagecolorallocate($image, 245, 247, 250);
+        $mainBlockColor  = imagecolorallocate($image, 200, 205, 212);
+        $rangeBlockColor = imagecolorallocate($image, 110, 120, 135);
+        $avgLineColor    = imagecolorallocate($image, 0, 0, 0);
+        $axisColor       = imagecolorallocate($image, 80, 80, 80);
+        $textColor       = imagecolorallocate($image, 40, 40, 40);
         
         imagefill($image, 0, 0, $bgColor);
         
@@ -133,43 +129,29 @@ class Moments extends Model
         $blockBottom  = 650;
         $axisY        = 670;
         
-        // Helper: Zet seconden vanaf 12:00 's middags om naar een X-coördinaat op de as
-        // 0 sec = 12:00 (start), 86400 sec = 12:00 volgende dag (eind)
-        $secondsToX = function (float $seconds) use ($graphWidth, $paddingLeft): int {
-            $fraction = max(0, min(1, $seconds / 86400));
-            return (int)($paddingLeft + ($fraction * $graphWidth));
-        };
-        
-        // Helper: Reken een Carbon/DateTime timestamp om naar seconden t.o.v. de meest nabije 12:00 's middags (vóór het event)
-        $getNormalizedSeconds = function ($dateTimeStr): float {
+        // Tijdelijke omrekening van timestamp naar seconden sinds middernacht van die dag
+        $getAbsoluteSeconds = function ($dateTimeStr): float {
             $dt = new \DateTime($dateTimeStr);
-            $hour = (int)$dt->format('H');
-            
-            // Als de tijd vóór 12:00 is, hoort het bij het venster dat gisteren om 12:00 begon
-            if ($hour < 12) {
-                $base12 = (clone $dt)->modify('yesterday')->setTime(12, 0, 0);
-            } else {
-                $base12 = (clone $dt)->setTime(12, 0, 0);
-            }
-            
-            return (float)($dt->getTimestamp() - $base12->getTimestamp());
+            $hours   = (int)$dt->format('H');
+            $minutes = (int)$dt->format('i');
+            $seconds = (int)$dt->format('s');
+            return (float)($hours * 3600 + $minutes * 60 + $seconds);
         };
         
-        // 4. Gegevens groeperen in Slaap- en Ontwaaktijden (in seconden vanaf 12:00)
-        $startSeconds  = [];
-        $stopSeconds   = [];
+        // 4. Gegevens verwerken tot start- en stoptijden (relatief t.o.v. eerste start)
+        $startSeconds = [];
+        $stopSeconds  = [];
         $intervalTime = [];
         
-        // Paarsgewijs verwerken (start -> stop)
         $lastStart = null;
         foreach ($records as $record) {
             if ($record->state === 1) {
                 $lastStart = $record->created_at;
             } elseif ($record->state === 0 && $lastStart !== null) {
-                $startSec = $getNormalizedSeconds($lastStart);
-                $stopSec  = $getNormalizedSeconds($record->created_at);
+                $startSec = $getAbsoluteSeconds($lastStart);
+                $stopSec  = $getAbsoluteSeconds($record->created_at);
                 
-                // Borg dat stoppen chronologisch na starten ligt op de schaal
+                // Als de stoptijd op de klok 'vroeger' is dan de starttijd, ging hij over middernacht heen
                 if ($stopSec <= $startSec) {
                     $stopSec += 86400;
                 }
@@ -181,18 +163,59 @@ class Moments extends Model
             }
         }
         
-        // Als er voldoende data is, berekenen we de statistieken en tekenen we de grafiek
+        // Standaard startuur als er geen data is (bijv. 12:00)
+        $timelineStartHour = 12;
+        
         if (!empty($startSeconds) && !empty($stopSeconds)) {
             
-            // Statistieken voor starten
             $minStart = min($startSeconds);
-            $maxStart = max($startSeconds);
-            $avgStart = array_sum($startSeconds) / count($startSeconds);
+            $maxStop  = max($stopSeconds);
+            
+            // Bepaal het midden van alle getekende data
+            $centerDataSeconds = ($minStart + $maxStop) / 2;
+            
+            // De tijdlijn moet gecentreerd zijn: starttijd is het midden min 12 uur (43200 seconden)
+            $idealStartSeconds = $centerDataSeconds - 43200;
+            
+            // Rond af naar het dichtstbijzijnde hele uur voor een schone as-indeling
+            $timelineStartHour = (int)round($idealStartSeconds / 3600);
+            
+            // Zorg dat het startuur altijd binnen 0-23 valt
+            $timelineStartHour = ($timelineStartHour % 24 + 24) % 24;
+        }
+        
+        // Tijdlijn start in absolute seconden van de dag
+        $timelineStartSeconds = $timelineStartHour * 3600;
+        
+        // Helper: Zet seconden (t.o.v. de dynamische starttijd) om naar X-coördinaat
+        $secondsToX = function (float $seconds) use ($graphWidth, $paddingLeft): int {
+            $fraction = max(0, min(1, $seconds / 86400));
+            return (int)($paddingLeft + ($fraction * $graphWidth));
+        };
+        
+        // Helper: Normaliseer absolute seconden van de dag t.o.v. het gekozen startuur
+        $normalizeToTimeline = function (float $absoluteSeconds) use ($timelineStartSeconds): float {
+            $rel = $absoluteSeconds - $timelineStartSeconds;
+            if ($rel < 0) {
+                $rel += 86400;
+            }
+            return $rel;
+        };
+        
+        if (!empty($startSeconds) && !empty($stopSeconds)) {
+            // Normaliseer alle tijden naar de nieuwe gecentreerde tijdlijn
+            $normStarts = array_map($normalizeToTimeline, $startSeconds);
+            $normStops  = array_map($normalizeToTimeline, $stopSeconds);
+            
+            // Statistieken voor starten
+            $minStart = min($normStarts);
+            $maxStart = max($normStarts);
+            $avgStart = array_sum($normStarts) / count($normStarts);
             
             // Statistieken voor stoppen
-            $minStop = min($stopSeconds);
-            $maxStop = max($stopSeconds);
-            $avgStop = array_sum($stopSeconds) / count($stopSeconds);
+            $minStop = min($normStops);
+            $maxStop = max($normStops);
+            $avgStop = array_sum($normStops) / count($normStops);
             
             $minTime = min($intervalTime);
             $maxTime = max($intervalTime);
@@ -209,31 +232,30 @@ class Moments extends Model
             
             // --- TEKENEN VAN DE BLOKKEN ---
             
-            // A. Donkergrijs blok aan de linkerkant (Vroegste start t/m Laatste start)
+            // A. Donkergrijs blok links (Vroegste start t/m Laatste start)
             imagefilledrectangle($image, $xMinStart, $blockTop, $xMaxStart, $blockBottom, $rangeBlockColor);
             
-            // B. Grijs blok in het midden (Gemiddelde start t/m Gemiddelde stop)
+            // B. Grijs blok midden (Gemiddelde start t/m Gemiddelde stop)
             imagefilledrectangle($image, $xMaxStart, $blockTop, $xMinStop, $blockBottom, $mainBlockColor);
             
-            // C. Donkergrijs blok aan de rechterkant (Vroegste stop t/m Laatste stop)
+            // C. Donkergrijs blok rechts (Vroegste stop t/m Laatste stop)
             imagefilledrectangle($image, $xMinStop, $blockTop, $xMaxStop, $blockBottom, $rangeBlockColor);
             
-            // D. Zwarte verticale lijn op het gemiddelde start-uur
+            // D. Zwarte verticale lijn op gemiddelde start
             imagesetthickness($image, 6);
             imageline($image, $xAvgStart, $blockTop - 10, $xAvgStart, $blockBottom + 10, $avgLineColor);
             
-            // E. Zwarte verticale lijn op het gemiddelde stop-uur
+            // E. Zwarte verticale lijn op gemiddelde stop
             imageline($image, $xAvgStop, $blockTop - 10, $xAvgStop, $blockBottom + 10, $avgLineColor);
         }
         
-        // 5. Horizontale as en uurmarkeringen (12:00 t/m 12:00)
+        // 5. Horizontale as en uurmarkeringen (dynamisch vanaf $timelineStartHour)
         imagesetthickness($image, 3);
         imageline($image, $paddingLeft, $axisY, $width - $paddingRight, $axisY, $axisColor);
         
         $fontPath = public_path('fonts/ARIALUNI.TTF');
-        
-        $fontSize = 36; // Grootte in punten (pt)
-        $angle    = 0;  // Rotatie in graden
+        $fontSize = 36;
+        $angle    = 0;
         
         for ($i = 0; $i <= 24; $i++) {
             $sec = $i * 3600;
@@ -242,31 +264,37 @@ class Moments extends Model
             // Tick mark
             imageline($image, $x, $axisY, $x, $axisY + 15, $axisColor);
             
-            // Uuraanduiding (12:00, 13:00, ..., 00:00, ..., 12:00)
-            $hourVal  = $i % 24;
-            $hourText = sprintf('%02d', $hourVal);
+            // Bepaal de uurwaarde op de as
+            $hourVal  = ($timelineStartHour + $i) % 24;
+            $hourText = sprintf('%02d:00', $hourVal);
             
-            // Teken tekst met exacte fontgrootte
-            imagettftext($image, $fontSize, $angle, $x - 25, $axisY + $fontSize + 15, $textColor, $fontPath, $hourText);
+            // Teken uuraanduiding
+            imagettftext($image, $fontSize, $angle, $x - 45, $axisY + $fontSize + 15, $textColor, $fontPath, $hourText);
         }
         
-        $times = 'Min: ' . (empty($minTime) ? '-' : date('H:m', $minTime)) .
-        ' Gem: ' . (empty($avgTime) ? '-' : date('H:m', $avgTime)) .
-        ' Max: ' . (empty($maxTime) ? '-' : date('H:m', $maxTime));
+        // Formatteer seconden naar uren:minuten (gmdate is hier geschikt voor)
+        $formatDuration = function ($seconds) {
+            if (empty($seconds)) return '-';
+            $hours = floor($seconds / 3600);
+            $minutes = floor(($seconds % 3600) / 60);
+            return sprintf('%02d:%02d', $hours, $minutes);
+        };
+        
+        $times = 'Min: ' . $formatDuration($minTime ?? null) .
+        ' Gem: ' . $formatDuration($avgTime ?? null) .
+        ' Max: ' . $formatDuration($maxTime ?? null);
+        
         $bbox = imagettfbbox($fontSize, $angle, $fontPath, $times);
         $boxWidth = abs($bbox[2] - $bbox[0]);
         imagettftext($image, $fontSize, $angle, $width / 2 - $boxWidth / 2, 10 + $fontSize, $textColor, $fontPath, $times);
         
-        // 6. Export the graph.
+        // 6. Exporteer de afbeelding
         ob_start();
         imagepng($image);
         $imageData = ob_get_clean();
         imagedestroy($image);
         
-        // Encode graph as Base64.
-        $graphData = 'data:image/png;base64,' . base64_encode($imageData);
-        
-        return $graphData;
+        return 'data:image/png;base64,' . base64_encode($imageData);
     }
     
 }
