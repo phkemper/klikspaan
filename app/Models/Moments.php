@@ -243,7 +243,7 @@ class Moments extends Model
             imageline($image, $x, $axisY, $x, $axisY + 15, $axisColor);
             
             // Uuraanduiding (12:00, 13:00, ..., 00:00, ..., 12:00)
-            $hourVal  = (round($leftTotal/3600) + $i) % 24;
+            $hourVal  = $i % 24;
             $hourText = sprintf('%02d', $hourVal);
             
             // Teken tekst met exacte fontgrootte
