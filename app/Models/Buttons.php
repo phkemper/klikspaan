@@ -76,6 +76,7 @@ class Buttons extends Model
         $lastState = Moments::where('button_id', $this->id)
         ->orderBy('created_at', 'desc')
         ->first();
+        dump($lastDtate);
         $this->state = $lastState ? $lastState->state : false;
         $this->created_on = $lastState ? $lastState->created_on : '1970-01-01 00:00:00';
         $this->updated_on = $lastState ? $lastState->updated_on : '1970-01-01 00:00:00';
