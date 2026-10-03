@@ -34,8 +34,12 @@ class DashboardController extends Controller
      */
     public function start($button_id)
     {
+        if ( !Buttons::belongsToUser($button_id) )
+        {
+            redirect(route('dashboard'));
+        }
+        
         $moment = new Moments;
-        $moment->user_id = Auth::id();
         $moment->button_id = $button_id;
         $moment->state = true;
         $moment->save();
@@ -48,8 +52,12 @@ class DashboardController extends Controller
      */
     public function stop($button_id)
     {
+        if ( !Buttons::belongsToUser($button_id) )
+        {
+            redirect(route('dashboard'));
+        }
+        
         $moment = new Moments;
-        $moment->user_id = Auth::id();
         $moment->button_id = $button_id;
         $moment->state = false;
         $moment->save();
