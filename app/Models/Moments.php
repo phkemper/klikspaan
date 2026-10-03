@@ -135,8 +135,8 @@ class Moments extends Model
         
         // Helper: Zet seconden vanaf 12:00 's middags om naar een X-coördinaat op de as
         // 0 sec = 12:00 (start), 86400 sec = 12:00 volgende dag (eind)
-        $secondsToX = function (float $seconds) use ($graphWidth, $paddingLeft, $leftTotal): int {
-            $fraction = max(0, min(1, ($seconds - $leftTotal)/ 86400));
+        $secondsToX = function (float $seconds) use ($graphWidth, $paddingLeft): int {
+            $fraction = max(0, min(1, $seconds / 86400));
             return (int)($paddingLeft + ($fraction * $graphWidth));
         };
         
@@ -205,13 +205,13 @@ class Moments extends Model
             $avgTime = array_sum($intervalTime) / count($intervalTime);
             
             // Omzetten naar X-coördinaten
-            $xMinStart = $secondsToX($minStart);
-            $xMaxStart = $secondsToX($maxStart);
-            $xAvgStart = $secondsToX($avgStart);
+            $xMinStart = $secondsToX($minStart - $leftTotal);
+            $xMaxStart = $secondsToX($maxStart - $leftTotal);
+            $xAvgStart = $secondsToX($avgStart - $leftTotal);
             
-            $xMinStop  = $secondsToX($minStop);
-            $xMaxStop  = $secondsToX($maxStop);
-            $xAvgStop  = $secondsToX($avgStop);
+            $xMinStop  = $secondsToX($minStop - $leftTotal);
+            $xMaxStop  = $secondsToX($maxStop - $leftTotal);
+            $xAvgStop  = $secondsToX($avgStop - $leftTotal);
             
             // --- TEKENEN VAN DE BLOKKEN ---
             
@@ -243,13 +243,13 @@ class Moments extends Model
         
         for ($i = 0; $i <= 24; $i++) {
             $sec = $i * 3600;
-            $x   = $secondsToX($sec);
+            $x   = $secondsToX($sec - $leftTotal);
             
             // Tick mark
             imageline($image, $x, $axisY, $x, $axisY + 15, $axisColor);
             
             // Uuraanduiding (12:00, 13:00, ..., 00:00, ..., 12:00)
-            $hourVal  = (12 + $i) % 24;
+            $hourVal  = (round($leftTotal/3600) + $i) % 24;
             $hourText = sprintf('%02d', $hourVal);
             
             // Teken tekst met exacte fontgrootte
