@@ -245,7 +245,7 @@ class Moments extends Model
         
         for ($i = 0; $i <= 24; $i++) {
             $sec = $i * 3600;
-            $x   = $secondsToX($sec - $leftTotal);
+            $x   = $secondsToX($sec);
             
             // Tick mark
             imageline($image, $x, $axisY, $x, $axisY + 15, $axisColor);
