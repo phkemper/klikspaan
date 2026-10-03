@@ -207,6 +207,12 @@ class Moments extends Model
             $xMaxStop  = $secondsToX($maxStop);
             $xAvgStop  = $secondsToX($avgStop);
             
+            // --- Bepaal de vroegste en laatste tijd en de vroegste tijd die op de ax moet
+            $minTotal = $minStart;
+            $maxTotal = $maxStop;
+            $intervalTotal = $maxTotal - $minTotal;
+            dump($intervalTotal); die;
+            
             // --- TEKENEN VAN DE BLOKKEN ---
             
             // A. Donkergrijs blok aan de linkerkant (Vroegste start t/m Laatste start)
