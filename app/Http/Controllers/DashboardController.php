@@ -23,7 +23,7 @@ class DashboardController extends Controller
         {
             $button->getDetails();
         }
-        dump($buttons);
+        
         return view('dashboard', [
             'buttons' => $buttons,
         ]);
