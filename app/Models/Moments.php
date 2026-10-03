@@ -268,8 +268,10 @@ class Moments extends Model
             $hourVal  = ($timelineStartHour + $i) % 24;
             $hourText = sprintf('%02d', $hourVal);
             
+            $bbox = imagettfbbox($fontSize, $angle, $fontPath, $hourText);
+            
             // Teken uuraanduiding
-            imagettftext($image, $fontSize, $angle, $x - 45, $axisY + $fontSize + 15, $textColor, $fontPath, $hourText);
+            imagettftext($image, $fontSize, $angle, $x - (abs($bbox[2] - $bbox[0]))/2, $axisY + $fontSize + 15, $textColor, $fontPath, $hourText);
         }
         
         // Formatteer seconden naar uren:minuten (gmdate is hier geschikt voor)
