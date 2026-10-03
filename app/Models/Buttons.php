@@ -101,6 +101,7 @@ class Buttons extends Model
         ->where('state', '=', $this->state ? 0 : 1)
         ->orderBy('created_at', 'desc')
         ->first();
+        dump($prevSTate);
         if ( $prevState && $prevState->state )
         {
             $this->lastOn = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
