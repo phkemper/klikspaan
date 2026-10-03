@@ -98,17 +98,17 @@ class Buttons extends Model
         }
         // Get the time of the last state.
         $prevState = Moments::where('button_id', $this->id)
-        ->where('state', '=', $this->state ? 1 : 0)
+        ->where('state', '=', $this->state ? 0 : 1)
         ->orderBy('created_at', 'desc')
         ->first();
         dump($prevState);
         if ( $prevState && $prevState->state )
         {
-            $this->lastOn = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
+            $this->lastOff = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
         }
         elseif ( $prevState)
         {
-            $this->lastOff = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
+            $this->lastOn = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
         }
     }
     
