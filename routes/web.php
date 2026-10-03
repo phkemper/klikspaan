@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/graph', [GraphController::class, 'index'])->name('graph');
 
-    Route::get('/setting/{button_id}', [SettingController::class, 'index'])->name('setting');
+    Route::get('/setting', [SettingController::class, 'index'])->name('setting');
     
 });
 
