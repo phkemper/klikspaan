@@ -64,6 +64,11 @@ class Buttons extends Model
      */
     public function getDetails()
     {
+        // Convert the create date/time to local timezone.
+        $userTimezone = Auth::user()->timezone ?? 'Europe/Amsterdam';
+        $now = Carbon::now($userTimezone);
+        $offsetInSeconds = $now->utcOffset() * 60;
+        
         $this->lastOn = '&nbsp;';
         $this->lastOff = '&nbsp;';
         // Get the current state of the buttons.
@@ -84,7 +89,7 @@ class Buttons extends Model
             ->first();
             if ( $prevState )
             {
-                $this->lastOn = date('m-d H:i', strtotime($prevState->created_at));
+                $this->lastOn = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
             }
         }
         else
@@ -103,7 +108,7 @@ class Buttons extends Model
             ->first();
             if ( $prevState )
             {
-                $this->lastOff = date('m-d H:i', strtotime($prevState->created_at));
+                $this->lastOff = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
             }
         }
     }
