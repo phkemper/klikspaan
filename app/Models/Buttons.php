@@ -76,7 +76,6 @@ class Buttons extends Model
         $lastState = Moments::where('button_id', $this->id)
         ->orderBy('created_at', 'desc')
         ->first();
-        dump($lastState);
         $this->state = $lastState ? $lastState->state : false;
         $this->created_on = $lastState ? $lastState->created_on : '1970-01-01 00:00:00';
         $this->updated_on = $lastState ? $lastState->updated_on : '1970-01-01 00:00:00';
@@ -102,7 +101,6 @@ class Buttons extends Model
         ->where('state', '=', $this->state ? 0 : 1)
         ->orderBy('created_at', 'desc')
         ->first();
-        dump($prevState);
         if ( $prevState && $prevState->state )
         {
             $this->lastOn = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
