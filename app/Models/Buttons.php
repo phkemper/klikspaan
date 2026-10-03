@@ -105,11 +105,11 @@ class Buttons extends Model
         dump($prevState);
         if ( $prevState && $prevState->state )
         {
-            $this->lastOff = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
-        }
-        elseif ( $prevState)
-        {
             $this->lastOn = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
+        }
+        elseif ( $prevState )
+        {
+            $this->lastOff = date('m-d H:i', strtotime($prevState->created_at) + $offsetInSeconds);
         }
     }
     
