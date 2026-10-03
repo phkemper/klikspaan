@@ -266,7 +266,7 @@ class Moments extends Model
             
             // Bepaal de uurwaarde op de as
             $hourVal  = ($timelineStartHour + $i) % 24;
-            $hourText = sprintf('%02d:00', $hourVal);
+            $hourText = sprintf('%02d', $hourVal);
             
             // Teken uuraanduiding
             imagettftext($image, $fontSize, $angle, $x - 45, $axisY + $fontSize + 15, $textColor, $fontPath, $hourText);
