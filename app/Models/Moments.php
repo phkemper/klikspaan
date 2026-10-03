@@ -135,8 +135,8 @@ class Moments extends Model
         
         // Helper: Zet seconden vanaf 12:00 's middags om naar een X-coördinaat op de as
         // 0 sec = 12:00 (start), 86400 sec = 12:00 volgende dag (eind)
-        $secondsToX = function (float $seconds) use ($graphWidth, $paddingLeft): int {
-            $fraction = max(0, min(1, $seconds / 86400));
+        $secondsToX = function (float $seconds) use ($graphWidth, $paddingLeft, $leftTotal): int {
+            $fraction = max(0, min(1, ($seconds - $leftTotal)/ 86400));
             return (int)($paddingLeft + ($fraction * $graphWidth));
         };
         
@@ -194,6 +194,12 @@ class Moments extends Model
             $maxStop = max($stopSeconds);
             $avgStop = array_sum($stopSeconds) / count($stopSeconds);
             
+            // --- Bepaal de vroegste en laatste tijd en de vroegste tijd die op de ax moet
+            $minTotal = $minStart;
+            $maxTotal = $maxStop;
+            $intervalTotal = $maxTotal - $minTotal;
+            $leftTotal = floor((86400 - $intervalTotal)/2/3600)*3600;
+            
             $minTime = min($intervalTime);
             $maxTime = max($intervalTime);
             $avgTime = array_sum($intervalTime) / count($intervalTime);
@@ -206,12 +212,6 @@ class Moments extends Model
             $xMinStop  = $secondsToX($minStop);
             $xMaxStop  = $secondsToX($maxStop);
             $xAvgStop  = $secondsToX($avgStop);
-            
-            // --- Bepaal de vroegste en laatste tijd en de vroegste tijd die op de ax moet
-            $minTotal = $minStart;
-            $maxTotal = $maxStop;
-            $intervalTotal = $maxTotal - $minTotal;
-            dump($intervalTotal); die;
             
             // --- TEKENEN VAN DE BLOKKEN ---
             
