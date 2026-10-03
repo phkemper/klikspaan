@@ -160,6 +160,8 @@ class Moments extends Model
         $stopSeconds   = [];
         $intervalTime = [];
         
+        $leftTotal = 0;
+        
         // Paarsgewijs verwerken (start -> stop)
         $lastStart = null;
         foreach ($records as $record) {
