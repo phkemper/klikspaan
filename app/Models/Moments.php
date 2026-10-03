@@ -160,8 +160,6 @@ class Moments extends Model
         $stopSeconds   = [];
         $intervalTime = [];
         
-        $leftTotal = 0;
-        
         // Paarsgewijs verwerken (start -> stop)
         $lastStart = null;
         foreach ($records as $record) {
@@ -196,24 +194,18 @@ class Moments extends Model
             $maxStop = max($stopSeconds);
             $avgStop = array_sum($stopSeconds) / count($stopSeconds);
             
-            // --- Bepaal de vroegste en laatste tijd en de vroegste tijd die op de ax moet
-            $minTotal = $minStart;
-            $maxTotal = $maxStop;
-            $intervalTotal = $maxTotal - $minTotal;
-            $leftTotal = floor((86400 - $intervalTotal)/2/3600)*3600;
-            
             $minTime = min($intervalTime);
             $maxTime = max($intervalTime);
             $avgTime = array_sum($intervalTime) / count($intervalTime);
             
             // Omzetten naar X-coördinaten
-            $xMinStart = $secondsToX($minStart - $leftTotal);
-            $xMaxStart = $secondsToX($maxStart - $leftTotal);
-            $xAvgStart = $secondsToX($avgStart - $leftTotal);
+            $xMinStart = $secondsToX($minStart);
+            $xMaxStart = $secondsToX($maxStart);
+            $xAvgStart = $secondsToX($avgStart);
             
-            $xMinStop  = $secondsToX($minStop - $leftTotal);
-            $xMaxStop  = $secondsToX($maxStop - $leftTotal);
-            $xAvgStop  = $secondsToX($avgStop - $leftTotal);
+            $xMinStop  = $secondsToX($minStop);
+            $xMaxStop  = $secondsToX($maxStop);
+            $xAvgStop  = $secondsToX($avgStop);
             
             // --- TEKENEN VAN DE BLOKKEN ---
             
@@ -251,7 +243,7 @@ class Moments extends Model
             imageline($image, $x, $axisY, $x, $axisY + 15, $axisColor);
             
             // Uuraanduiding (12:00, 13:00, ..., 00:00, ..., 12:00)
-            $hourVal  = (round($leftTotal/3600) + $i + 12) % 24;
+            $hourVal  = (round($leftTotal/3600) + $i) % 24;
             $hourText = sprintf('%02d', $hourVal);
             
             // Teken tekst met exacte fontgrootte
