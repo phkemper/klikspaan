@@ -22,9 +22,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/graph', [GraphController::class, 'index'])->name('graph');
 
     Route::get('/setting', [SettingController::class, 'index'])->name('setting');
+    Route::get('/setting/download/{id}', [SettingController::class, 'download'])->name('download');
     Route::get('/setting/create', [SettingController::class, 'create'])->name('create');
-    Route::get('/setting/update', [SettingController::class, 'update'])->name('update');
-    Route::get('/setting/delete', [SettingController::class, 'delete'])->name('delete');
+    Route::post('/setting/store', [SettingController::class, 'store'])->name('store');
+    Route::get('/setting/update/{id}', [SettingController::class, 'update'])->name('update');
+    Route::post('/setting/patch', [SettingController::class, 'patch'])->name('patch');
+    Route::get('/setting/delete/{id}', [SettingController::class, 'delete'])->name('delete');
+    Route::post('/setting/remove', [SettingController::class, 'remove'])->name('remove');
     
 });
 

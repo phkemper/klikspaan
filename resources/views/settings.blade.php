@@ -29,6 +29,11 @@
                             
                             <!-- Kolom 2: Knoppen (Aanpassen & Verwijderen) -->
                             <td class="px-6 py-4 text-right space-x-2 whitespace-nowrap">
+                                <!-- Groene knop: Downloaden -->
+                                <a href="{{ route('download') }}?button_id={{ $button->id }}" class="inline-block px-3 py-1.5 text-xs font-medium text-white bg-green-600 hover:bg-green-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
+                                    Downloaden
+                                </a>
+    
                                 <!-- Blauwe knop: Aanpassen -->
                                 <a href="{{ route('update') }}?button_id={{ $button->id }}" class="inline-block px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center">
                                     Aanpassen
