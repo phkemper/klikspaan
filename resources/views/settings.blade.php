@@ -30,7 +30,7 @@
                             <!-- Kolom 2: Knoppen (Aanpassen & Verwijderen) -->
                             <td class="px-4 py-4 text-right">
                                 <div class="flex flex-col sm:flex-row justify-end items-stretch sm:items-center gap-2">
-                                    <a href="{{ route('download', ['id' => $button->id])) }}" class="px-3 py-1.5 text-xs font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow transition-colors text-center">
+                                    <a href="{{ route('download', ['id' => $button->id]) }}" class="px-3 py-1.5 text-xs font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow transition-colors text-center">
                                         Downloaden
                                     </a>
                                     <a href="{{ route('update', ['id' => $button->id]) }}" class="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow transition-colors text-center">
