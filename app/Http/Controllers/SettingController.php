@@ -104,7 +104,7 @@ class SettingController extends Controller
         $button = Buttons::where('user_id', auth()->id())
         ->findOrFail($id);
         
-        return view('edit', compact('button'));
+        return view('update', compact('button'));
     }
     
     /**
