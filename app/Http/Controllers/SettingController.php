@@ -135,4 +135,40 @@ class SettingController extends Controller
         return redirect()
         ->route('setting');
     }
+    
+    /**
+     * Toon delete formulier.
+     */
+    public function delete(Request $request, $id)
+    {
+        // Haal de knop op (en borg dat deze van de ingelogde gebruiker is)
+        $button = Buttons::where('user_id', Auth::id())
+        ->where('id', '=', $id)
+        ->findOrFail($id);
+        
+        return view('delete', compact('button'));
+    }
+    
+    /**
+     * Final delete of the button.
+     */
+    public function remove(Request $request)
+    {
+        // 1. Valideer de invoer
+        $validated = $request->validate([
+            'id' => 'required|integer|exists:buttons,id',
+        ]);
+        
+        // 2. Zoek het record op
+        $button = Buttons::where('user_id', Auth::id())
+        ->where('id', '=', $request->input('id'))
+        ->findOrFail($validated['id']);
+        
+        // 3. Verwijder de knop
+        $button->delete();
+        
+        // 4. Stuur de gebruiker terug naar de instellingenpagina met melding
+        return redirect()
+        ->route('setting');
+    }
 }
