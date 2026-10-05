@@ -71,4 +71,25 @@ class SettingController extends Controller
     {
         return view('create');
     }
+    
+    /**
+     * Save a new button.
+     */
+    public function store(Request $request)
+    {
+        // 1. Valideer de invoer
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        
+        // 2. Maak het nieuwe Button/Klikspaan record aan
+        Buttons::create([
+            'name' => $validated['name'],
+            'user_id' => Auth::id(),
+        ]);
+        
+        // 3. Stuur de gebruiker terug naar de settings pagina met een succesmelding
+        return redirect()
+        ->route('setting');
+    }
 }
