@@ -39,7 +39,7 @@ class SettingController extends Controller
             fputs($handle, "\xEF\xBB\xBF");
             
             // CSV Kolomkopteksten
-            fputcsv($handle, ['Start', 'Stop'], ';');
+            fputcsv($handle, ['Start', 'Stop', 'Lengte',], ';');
             
             // Data rijen toevoegen
             foreach ($records as $record) {
