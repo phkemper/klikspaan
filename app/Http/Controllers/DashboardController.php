@@ -25,6 +25,7 @@ class DashboardController extends Controller
             $button = new Buttons;
             $button->name = 'Nachtrust';
             $button->user_id = Auth::id();
+            $button->color = '#000080';
             $button->save();
             $buttons[] = $button;
         }
