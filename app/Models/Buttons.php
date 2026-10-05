@@ -134,6 +134,11 @@ class Buttons extends Model
     {
         $rows = [];
         
+        // Convert the create date/time to local timezone.
+        $userTimezone = Auth::user()->timezone ?? 'Europe/Amsterdam';
+        $now = Carbon::now($userTimezone);
+        $offsetInSeconds = $now->utcOffset() * 60;
+        
         $moments = Moments::where('button_id', '=', $id)
         ->orderBy('created_at')
         ->get();
@@ -143,11 +148,11 @@ class Buttons extends Model
         {
             if ( $moment->state == 1)
             {
-                $rows[$ndx] = ['start' => $moment->created_at, 'stop' => '', 'lengte' => '',];
+                $rows[$ndx] = ['start' => date('Y-m-d H:i:s', strtotime($moment->created_at) + $offsetInSeconds), 'stop' => '', 'lengte' => '',];
             }
             else
             {
-                $rows[$ndx]['stop'] = $moment->created_at;
+                $rows[$ndx]['stop'] = date('Y-m-d H:i:s', strtotime($moment->created_at) + $offsetInSeconds);
                 $rows[$ndx]['lengte'] = date('H:i:s', strtotime($moment->created_at) - strtotime($rows[$ndx]['start']));
                 $ndx++;
             }
