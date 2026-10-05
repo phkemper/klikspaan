@@ -143,11 +143,12 @@ class Buttons extends Model
         {
             if ( $moment->state == 1)
             {
-                $rows[$ndx] = ['start' => $moment->created_at, 'stop' => ''];
+                $rows[$ndx] = ['start' => $moment->created_at, 'stop' => '', 'lengte' => '',];
             }
             else
             {
                 $rows[$ndx]['stop'] = $moment->created_at;
+                $ros[$ndx]['lengte'] = date('H:i:s', strtotime($moment->created_at) - strtotime($rows[$ndx]['start']));
                 $ndx++;
             }
         }

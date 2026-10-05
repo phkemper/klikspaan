@@ -46,6 +46,7 @@ class SettingController extends Controller
                 fputcsv($handle, [
                     $record['start'],
                     $record['stop'],
+                    $record['lengte'],
                 ], ';');
             }
             
