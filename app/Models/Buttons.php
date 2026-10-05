@@ -93,7 +93,7 @@ class Buttons extends Model
                 'off' => Buttons::generateButtonGradients($this->color),
                 'on' => Buttons::generateButtonGradients('#808080'),
             ];
-            $this->lastOn = date('m-d H:i', strtotime($this->created_at) + $offsetInSeconds);
+            $this->lastOn = $lastState ? date('m-d H:i', strtotime($this->created_at) + $offsetInSeconds) : '';
         }
         else
         {
@@ -101,7 +101,7 @@ class Buttons extends Model
                 'off' => Buttons::generateButtonGradients('#808080'),
                 'on' => Buttons::generateButtonGradients($this->color),
             ];
-            $this->lastOff = date('m-d H:i', strtotime($this->created_at) + $offsetInSeconds);
+            $this->lastOff = $lastState ? date('m-d H:i', strtotime($this->created_at) + $offsetInSeconds) : '';
         }
         // Get the time of the last state.
         $prevState = Moments::where('button_id', $this->id)
