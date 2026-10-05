@@ -94,4 +94,45 @@ class SettingController extends Controller
         return redirect()
         ->route('setting');
     }
+    
+    /**
+     * Toon het bewerkformulier
+     */
+    public function update($id)
+    {
+        // Haal de knop op (of geef een 404 als hij niet bestaat)
+        $button = Buttons::where('user_id', auth()->id())
+        ->findOrFail($id);
+        
+        return view('edit', compact('button'));
+    }
+    
+    /**
+     * Sla de wijzigingen op
+     * @param Request $request
+     * @param integer $id
+     */
+    public function patch(Request $request)
+    {
+        // 1. Valideer de ingevoerde gegevens
+        $validated = $request->validate([
+            'id' => 'required|integer',
+            'name'  => 'required|string|max:255',
+            'color' => 'required|string|regex:/^#[a-fA-F0-9]{6}$/',
+        ]);
+        
+        $button = Buttons::where('user_id', Auth::id())
+        ->findOrFail($request->input('id'));
+        
+        
+        // 2. Werk het record bij
+        $button->update([
+            'name'  => $validated['name'],
+            'color' => $validated['color'],
+        ]);
+        
+        // 3. Stuur terug naar de instellingenpagina
+        return redirect()
+        ->route('setting');
+    }
 }
