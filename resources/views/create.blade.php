@@ -56,14 +56,16 @@
                         </button>
                     </template>
     
-                    <!-- Vrije kleurkeuze (Custom Color Picker) -->
-                    <label class="w-9 h-9 rounded-full border-2 border-dashed border-gray-400 dark:border-gray-500 flex items-center justify-center cursor-pointer hover:border-gray-600 relative overflow-hidden">
+                    <!-- Vrije kleurkeuze (Custom Color Picker met directe event trigger) -->
+                    <label class="w-9 h-9 rounded-full border-2 border-dashed border-gray-400 dark:border-gray-500 flex items-center justify-center cursor-pointer hover:border-gray-600 relative overflow-hidden bg-gray-50 dark:bg-gray-700">
                         <input 
                             type="color" 
-                            x-model="selectedColor" 
-                            class="absolute -top-2 -left-2 w-16 h-16 opacity-0 cursor-pointer"
+                            :value="selectedColor"
+                            @input="selectedColor = $event.target.value"
+                            @change="selectedColor = $event.target.value"
+                            class="absolute -inset-2 w-[200%] h-[200%] opacity-0 cursor-pointer"
                         >
-                        <span class="text-xs text-gray-500 dark:text-gray-400 font-bold">+</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400 font-bold pointer-events-none">+</span>
                     </label>
                 </div>
     
