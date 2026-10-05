@@ -19,6 +19,16 @@ class DashboardController extends Controller
             ->orderBy('name')
             ->get();
         
+        // If there are no buttons, create the first one.
+        if ( !$buttons || !count($buttons) )
+        {
+            $button = new Buttons;
+            $button->name = 'Nachtrust';
+            $button->user_id = Auth::id();
+            $button->save();
+            $buttons[] = $button;
+        }
+        
         foreach ( $buttons as $button )
         {
             $button->getDetails();
