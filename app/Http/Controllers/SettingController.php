@@ -39,7 +39,7 @@ class SettingController extends Controller
         $name = preg_replace('/[^\w\s\d\-_~,;\[\]\(\)\.]/u', '-', $name);
         
         // 2. Optioneel: vervang meerdere spaties/koppeltekens achter elkaar door één teken
-        $name = preg_replace('/[' . preg_quote($replaceWith, '/') . '\s]+/', '-', $name);
+        $name = preg_replace('/[' . preg_quote('-', '/') . '\s]+/', '-', $name);
         
         // 3. Verwijder eventuele punten en spaties aan het begin en einde (Windows restrictie)
         $name = trim($name, ' .');
