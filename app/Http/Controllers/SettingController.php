@@ -26,7 +26,7 @@ class SettingController extends Controller
      */
     public function download(Request $request, $id)
     {
-        $fileName = 'klikspaan-export-' . date('Y-m-d-H-i-s') . '.csv';
+        $fileName = 'klikspaan-export-' . date('Y-m-d-H-i-s') . '-button-' . $id . '.csv';
         
         // Haal de data op
         $records = Buttons::getData($id);
