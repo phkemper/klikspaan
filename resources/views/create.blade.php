@@ -57,16 +57,17 @@
                     </template>
     
                     <!-- Vrije kleurkeuze (Custom Color Picker met directe event trigger) -->
-                    <label class="w-9 h-9 rounded-full border-2 border-dashed border-gray-400 dark:border-gray-500 flex items-center justify-center cursor-pointer hover:border-gray-600 relative overflow-hidden bg-gray-50 dark:bg-gray-700">
-                        <input 
-                            type="color" 
-                            :value="selectedColor"
-                            @input="selectedColor = $event.target.value"
-                            @change="selectedColor = $event.target.value"
-                            class="absolute -inset-2 w-[200%] h-[200%] opacity-0 cursor-pointer"
-                        >
-                        <span class="text-xs text-gray-500 dark:text-gray-400 font-bold pointer-events-none">+</span>
-                    </label>
+                    <div class="flex items-center gap-3">
+    <!-- Native picker netjes gestyled -->
+    <input 
+        type="color" 
+        id="color"
+        name="color"
+        x-model="selectedColor"
+        class="w-10 h-10 p-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 cursor-pointer shadow-sm"
+    >
+    <span class="text-xs text-gray-500 dark:text-gray-400 font-mono uppercase" x-text="selectedColor"></span>
+</div>
                 </div>
     
                 <!-- Gekozen kleur preview -->
