@@ -12,7 +12,7 @@
         <!-- Formulier -->
         <form action="{{ route('patch') }}" method="POST">
             @csrf
-            @method('PATCH')
+            <!-- @method('PATCH') -->
     
     		<input type="hidden" name="id" id="id" value="{{$button->id}}"/>
     		
