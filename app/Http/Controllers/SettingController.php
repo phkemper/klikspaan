@@ -63,4 +63,12 @@ class SettingController extends Controller
             'Content-Type' => 'text/csv; charset=UTF-8',
         ]);
     }
+    
+    /**
+     * Create a new item.
+     */
+    public function create(Request $request)
+    {
+        return view('create');
+    }
 }
