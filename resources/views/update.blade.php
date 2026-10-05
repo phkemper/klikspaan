@@ -95,7 +95,7 @@
                     type="submit" 
                     class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow transition-colors text-center"
                 >
-                    Opslaan
+                    Bijwerken
                 </button>
             </div>
         </form>
