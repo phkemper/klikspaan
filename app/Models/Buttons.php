@@ -147,7 +147,7 @@ class Buttons extends Model
             }
             else
             {
-                $rows[$ndx]['stop'] = $moment->created_at];
+                $rows[$ndx]['stop'] = $moment->created_at;
                 $ndx++;
             }
         }
