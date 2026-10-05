@@ -148,7 +148,7 @@ class Buttons extends Model
             else
             {
                 $rows[$ndx]['stop'] = $moment->created_at;
-                $ros[$ndx]['lengte'] = date('H:i:s', strtotime($moment->created_at) - strtotime($rows[$ndx]['start']));
+                $rows[$ndx]['lengte'] = date('H:i:s', strtotime($moment->created_at) - strtotime($rows[$ndx]['start']));
                 $ndx++;
             }
         }
