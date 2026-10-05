@@ -20,4 +20,38 @@ class SettingController extends Controller
         
         return view('settings',['buttons' => $buttons,]);
     }
+    
+    /**
+     * Start download for a button.
+     */
+    public function download(Request $request, $id)
+    {
+        $fileName = 'klikspaan-export-' . date('Y-m-d-H-i-s') . '.csv';
+        
+        // Haal de data op
+        $records = Buttons::getData($id);
+        
+        // Stream de CSV direct naar de browser
+        return response()->streamDownload(function () use ($records) {
+            $handle = fopen('php://output', 'w');
+            
+            // Optioneel: voeg een UTF-8 BOM toe voor correcte weergave in Excel
+            fputs($handle, "\xEF\xBB\xBF");
+            
+            // CSV Kolomkopteksten
+            fputcsv($handle, ['Start', 'Stop'], ';');
+            
+            // Data rijen toevoegen
+            foreach ($records as $record) {
+                fputcsv($handle, [
+                    $record['start'],
+                    $record['stop'],
+                ], ';');
+            }
+            
+            fclose($handle);
+        }, $fileName, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+        ]);
+    }
 }

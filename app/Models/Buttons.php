@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\Moments;
 
 class Buttons extends Model
 {
@@ -124,5 +125,33 @@ class Buttons extends Model
         if ( $button->user_id != Auth::id() ) return false;
         
         return true;
+    }
+    
+    /**
+     * Return the start and end times for a CSV export
+     */
+    public static function getData($id)
+    {
+        $rows = [];
+        
+        $moments = Moments::where('button_id', '=', $id)
+        ->orderBy('created_at')
+        ->get();
+        
+        $ndx = 0;
+        foreach ( $moments as $moment )
+        {
+            if ( $moment->state == 1)
+            {
+                $rows[$ndx] = ['start' => $moment->created_at, 'stop' => ''];
+            }
+            else
+            {
+                $rows[$ndx]['stop'] = $moment->created_at];
+                $ndx++;
+            }
+        }
+        
+        return $rows;
     }
 }
