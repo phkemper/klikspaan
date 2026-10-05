@@ -31,6 +31,54 @@
                 @enderror
             </div>
     
+            <div class="mb-6">
+                <label class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Kies een kleur
+                </label>
+                
+                <!-- Verborgen input om de geselecteerde HEX-waarde te versturen -->
+                <input type="hidden" name="color" :value="selectedColor">
+    
+                <div class="flex items-center gap-3 flex-wrap">
+                    <!-- Preset kleuren -->
+                    <template x-for="hex in ['#4f46e5', '#2563eb', '#059669', '#d97706', '#dc2626', '#7c3aed', '#db2777']" :key="hex">
+                        <button 
+                            type="button" 
+                            @click="selectedColor = hex"
+                            :style="`background-color: ${hex}`"
+                            class="w-9 h-9 rounded-full relative flex items-center justify-center transition-transform hover:scale-110 focus:outline-none ring-2 ring-offset-2 dark:ring-offset-gray-800"
+                            :class="selectedColor === hex ? 'ring-gray-900 dark:ring-white scale-105' : 'ring-transparent'"
+                        >
+                            <!-- Vinkje als kleur actief is -->
+                            <svg x-show="selectedColor === hex" class="w-5 h-5 text-white drop-shadow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </button>
+                    </template>
+    
+                    <!-- Vrije kleurkeuze (Custom Color Picker) -->
+                    <label class="w-9 h-9 rounded-full border-2 border-dashed border-gray-400 dark:border-gray-500 flex items-center justify-center cursor-pointer hover:border-gray-600 relative overflow-hidden">
+                        <input 
+                            type="color" 
+                            x-model="selectedColor" 
+                            class="absolute -top-2 -left-2 w-16 h-16 opacity-0 cursor-pointer"
+                        >
+                        <span class="text-xs text-gray-500 dark:text-gray-400 font-bold">+</span>
+                    </label>
+                </div>
+    
+                <!-- Gekozen kleur preview -->
+                <div class="mt-3 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                    <span>Geselecteerde kleur:</span>
+                    <span class="inline-block w-4 h-4 rounded-full border border-gray-300" :style="`background-color: ${selectedColor}`"></span>
+                    <span class="font-mono uppercase" x-text="selectedColor"></span>
+                </div>
+    
+                @error('color')
+                    <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+            
             <!-- Knoppen (Annuleren & Opslaan) -->
             <div class="flex items-center justify-end gap-[4%] pt-4 border-t border-gray-100 dark:border-gray-700">
                 <!-- Annuleren Knop -->

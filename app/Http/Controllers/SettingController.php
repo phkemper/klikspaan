@@ -80,11 +80,13 @@ class SettingController extends Controller
         // 1. Valideer de invoer
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'color' => 'required|string|regex:/^#[a-fA-F0-9]{6}$/',
         ]);
         
         // 2. Maak het nieuwe Button/Klikspaan record aan
         Buttons::create([
             'name' => $validated['name'],
+            'color' => $validated['color'] ?? '#4f46e5',
             'user_id' => Auth::id(),
         ]);
         
