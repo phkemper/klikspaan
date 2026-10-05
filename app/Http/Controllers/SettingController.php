@@ -34,7 +34,20 @@ class SettingController extends Controller
             return redirect(route('setting'));
         }
         
-        $fileName = 'klikspaan-export-' . date('Y-m-d-H-i-s') . '-' . str_replace(' ','-',$button->name) . '.csv';
+        $name = $button->name;
+        // 1. Verwijder stuurtekens (ASCII 0-31) en ongeldige karakters: \ / : * ? " < > |
+        $name = preg_replace('/[^\w\s\d\-_~,;\[\]\(\)\.]/u', '-', $name);
+        
+        // 2. Optioneel: vervang meerdere spaties/koppeltekens achter elkaar door één teken
+        $name = preg_replace('/[' . preg_quote($replaceWith, '/') . '\s]+/', '-', $name);
+        
+        // 3. Verwijder eventuele punten en spaties aan het begin en einde (Windows restrictie)
+        $name = trim($name, ' .');
+        
+        // 4. Geef een standaardnaam als de string leeg is geworden
+        $name = $name ?: 'button-' . $button->id;
+        
+        $fileName = 'klikspaan-export-' . date('Y-m-d-H-i-s') . '-' . $name . '.csv';
         
         // Haal de data op
         $records = Buttons::getData($id);
