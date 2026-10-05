@@ -35,7 +35,7 @@
             <div class="flex items-center justify-end gap-[4%] pt-4 border-t border-gray-100 dark:border-gray-700">
                 <!-- Annuleren Knop -->
                 <a 
-                    href="{{ route('settings') }}" 
+                    href="{{ route('setting') }}" 
                     class="inline-block px-4 py-2 text-xs md:text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 active:bg-yellow-400 active:hover:bg-yellow-400 active:text-black active:hover:text-black rounded-lg shadow-sm transition-colors text-center"
                 >
                     Annuleren
