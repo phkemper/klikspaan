@@ -36,38 +36,34 @@
                     Kies een kleur
                 </label>
                 
-                <!-- Verborgen input om de geselecteerde HEX-waarde te versturen -->
                 <input type="hidden" name="color" :value="selectedColor">
     
                 <div class="flex items-center gap-3 flex-wrap">
-                    <!-- Preset kleuren -->
-                    <template x-for="hex in ['#4f46e5', '#2563eb', '#059669', '#d97706', '#dc2626', '#7c3aed', '#db2777']" :key="hex">
+                    <!-- Preset Kleuren -->
+                    <template x-for="hex in [
+                        '#4f46e5', '#2563eb', '#0284c7', '#059669', 
+                        '#16a34a', '#ca8a04', '#ea580c', '#dc2626', 
+                        '#e11d48', '#9333ea', '#475569', '#111827'
+                    ]" :key="hex">
                         <button 
                             type="button" 
                             @click="selectedColor = hex"
                             :style="`background-color: ${hex}`"
-                            class="w-9 h-9 rounded-full relative flex items-center justify-center transition-transform hover:scale-110 focus:outline-none ring-2 ring-offset-2 dark:ring-offset-gray-800"
-                            :class="selectedColor === hex ? 'ring-gray-900 dark:ring-white scale-105' : 'ring-transparent'"
+                            class="w-8 h-8 rounded-full relative flex items-center justify-center transition-all hover:scale-110 focus:outline-none ring-2 ring-offset-2 dark:ring-offset-gray-800"
+                            :class="selectedColor === hex ? 'ring-gray-900 dark:ring-white scale-110' : 'ring-transparent opacity-80 hover:opacity-100'"
                         >
-                            <!-- Vinkje als kleur actief is -->
-                            <svg x-show="selectedColor === hex" class="w-5 h-5 text-white drop-shadow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                            <svg x-show="selectedColor === hex" class="w-4 h-4 text-white drop-shadow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                             </svg>
                         </button>
                     </template>
     
-                    <!-- Vrije kleurkeuze (Custom Color Picker met directe event trigger) -->
-                    <div class="flex items-center gap-3">
-    <!-- Native picker netjes gestyled -->
-    <input 
-        type="color" 
-        id="color"
-        name="color"
-        x-model="selectedColor"
-        class="w-10 h-10 p-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 cursor-pointer shadow-sm"
-    >
-    <span class="text-xs text-gray-500 dark:text-gray-400 font-mono uppercase" x-text="selectedColor"></span>
-</div>
+                    <!-- Custom Color Input -->
+                    <input 
+                        type="color" 
+                        x-model="selectedColor"
+                        class="w-8 h-8 p-0.5 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 cursor-pointer shadow-sm"
+                    >
                 </div>
     
                 <!-- Gekozen kleur preview -->
