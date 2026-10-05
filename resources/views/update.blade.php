@@ -10,10 +10,12 @@
         </div>
     
         <!-- Formulier -->
-        <form action="{{ route('patch', ['button_id' => $button->id]) }}" method="POST">
+        <form action="{{ route('patch') }}" method="POST">
             @csrf
             @method('PATCH')
     
+    		<input type="hidden" name="id" id="id" value="{{$button->id}}"/>
+    		
             <!-- Naam Invoerveld -->
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
