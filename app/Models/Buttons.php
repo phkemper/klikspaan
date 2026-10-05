@@ -9,6 +9,12 @@ use App\Models\Moments;
 
 class Buttons extends Model
 {
+    protected $fillable = [
+        'name',
+        'color',
+        'user_id',
+    ];
+    
     /**
      * Convert hex to rgb.
      */
