@@ -105,6 +105,13 @@ class Moments extends Model
             $record->created_at = date('Y-m-d H:i:s', strtotime($record->created_at) + $offsetInSeconds);
         }
         
+        // Check if the last time is a stop time. If not, remove the last one.
+        $lastIndex = count($records) - 1;
+        if ( $records[$lastIndex]->state == 1 )
+        {
+            unset($records[$lastIndex]);
+        }
+        
         // 1. Canvas en Afmetingen
         $width  = 1920;
         $height = 1080;
