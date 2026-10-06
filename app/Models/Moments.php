@@ -111,7 +111,7 @@ class Moments extends Model
         {
             unset($records[$lastIndex]);
         }
-        
+         dump($records);
         // 1. Canvas en Afmetingen
         $width  = 1920;
         $height = 1080;
