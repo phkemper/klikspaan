@@ -169,7 +169,9 @@ class Moments extends Model
                 $lastStart = null;
             }
         }
-        
+        dump($startSeconds);
+        dump($stopSeconds);
+        dump($intervalTime);
         // Standaard startuur als er geen data is (bijv. 12:00)
         $timelineStartHour = 12;
         
