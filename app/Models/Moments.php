@@ -120,7 +120,7 @@ class Moments extends Model
         // 2. Kleuren
         $bgColor         = imagecolorallocate($image, 245, 247, 250);
         $mainBlockColor  = imagecolorallocate($image, 200, 205, 212);
-        $rangeBlockColor = imagecolorallocate($image, 110, 120, 135);
+        $rangeBlockColor = imagecolorallocatealpha($image, 110, 120, 135, 128);
         $avgLineColor    = imagecolorallocate($image, 0, 0, 0);
         $axisColor       = imagecolorallocate($image, 80, 80, 80);
         $textColor       = imagecolorallocate($image, 40, 40, 40);
@@ -158,9 +158,6 @@ class Moments extends Model
             } elseif ($record->state === 0 && $lastStart !== null) {
                 $startSec = $getAbsoluteSeconds($lastStart);
                 $stopSec  = $getAbsoluteSeconds($record->created_at);
-                $days = (int)floor($startSec/86400) * 86400;
-                $startSec -= $days;
-                $stopSec -= $days;
                 
                 // Als de stoptijd op de klok 'vroeger' is dan de starttijd, ging hij over middernacht heen
                 if ($stopSec <= $startSec) {
@@ -173,7 +170,7 @@ class Moments extends Model
                 $lastStart = null;
             }
         }
-        dump($startSeconds);dump($stopSeconds);
+        
         // Standaard startuur als er geen data is (bijv. 12:00)
         $timelineStartHour = 12;
         
