@@ -192,6 +192,7 @@ class Moments extends Model
         }
         dump($minStart);
         dump($maxStop);
+        if ( $maxStop > 86400 ) $maxStop -= 86400;
         // Tijdlijn start in absolute seconden van de dag
         $timelineStartSeconds = $timelineStartHour * 3600;
         
