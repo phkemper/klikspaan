@@ -120,7 +120,8 @@ class Moments extends Model
         // 2. Kleuren
         $bgColor         = imagecolorallocate($image, 245, 247, 250);
         $mainBlockColor  = imagecolorallocate($image, 200, 205, 212);
-        $rangeBlockColor = imagecolorallocatealpha($image, 110, 120, 135, 64);
+        $startBlockColor = imagecolorallocatealpha($image, 110, 120, 255, 64);
+        $stopBlockColor  = imagecolorallocatealpha($image, 255, 120, 135, 64);
         $avgLineColor    = imagecolorallocate($image, 0, 0, 0);
         $axisColor       = imagecolorallocate($image, 80, 80, 80);
         $textColor       = imagecolorallocate($image, 40, 40, 40);
@@ -239,14 +240,14 @@ class Moments extends Model
             
             // --- TEKENEN VAN DE BLOKKEN ---
             
-            // A. Donkergrijs blok links (Vroegste start t/m Laatste start)
-            imagefilledrectangle($image, $xMinStart, $blockTop, $xMaxStart, $blockBottom, $rangeBlockColor);
-            
-            // B. Grijs blok midden (Gemiddelde start t/m Gemiddelde stop)
+            // A. Grijs blok midden (Gemiddelde start t/m Gemiddelde stop)
             imagefilledrectangle($image, $xMaxStart, $blockTop, $xMinStop, $blockBottom, $mainBlockColor);
             
+            // B. Donkergrijs blok links (Vroegste start t/m Laatste start)
+            imagefilledrectangle($image, $xMinStart, $blockTop, $xMaxStart, $blockBottom, $startBlockColor);
+            
             // C. Donkergrijs blok rechts (Vroegste stop t/m Laatste stop)
-            imagefilledrectangle($image, $xMinStop, $blockTop, $xMaxStop, $blockBottom, $rangeBlockColor);
+            imagefilledrectangle($image, $xMinStop, $blockTop, $xMaxStop, $blockBottom, $stopBlockColor);
             
             // D. Zwarte verticale lijn op gemiddelde start
             imagesetthickness($image, 6);
