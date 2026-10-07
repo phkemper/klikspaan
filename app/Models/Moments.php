@@ -169,9 +169,7 @@ class Moments extends Model
                 $lastStart = null;
             }
         }
-        dump($startSeconds);
-        dump($stopSeconds);
-        dump($intervalTime);
+
         // Standaard startuur als er geen data is (bijv. 12:00)
         $timelineStartHour = 12;
         
@@ -179,10 +177,6 @@ class Moments extends Model
             
             $minStart = min($startSeconds);
             $maxStop  = max($stopSeconds);
-            if ( $maxStop < $minStart )
-            {
-                $maxStop += 86400;
-            }
             
             // Bepaal het midden van alle getekende data
             $centerDataSeconds = ($minStart + $maxStop) / 2;
@@ -196,7 +190,7 @@ class Moments extends Model
             // Zorg dat het startuur altijd binnen 0-23 valt
             $timelineStartHour = ($timelineStartHour % 24 + 24) % 24;
         }
-        dump($timelineStartHour);
+        
         // Tijdlijn start in absolute seconden van de dag
         $timelineStartSeconds = $timelineStartHour * 3600;
         
