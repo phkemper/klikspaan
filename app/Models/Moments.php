@@ -139,10 +139,11 @@ class Moments extends Model
         // Tijdelijke omrekening van timestamp naar seconden sinds middernacht van die dag
         $getAbsoluteSeconds = function ($dateTimeStr): float {
             $dt = new \DateTime($dateTimeStr);
+            $days    = (int)$dt->format('d');
             $hours   = (int)$dt->format('H');
             $minutes = (int)$dt->format('i');
             $seconds = (int)$dt->format('s');
-            return (float)($hours * 3600 + $minutes * 60 + $seconds);
+            return (float)($days * 86400 + $hours * 3600 + $minutes * 60 + $seconds);
         };
         
         // 4. Gegevens verwerken tot start- en stoptijden (relatief t.o.v. eerste start)
