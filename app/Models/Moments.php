@@ -206,9 +206,6 @@ class Moments extends Model
             if ($rel < 0) {
                 $rel += 86400;
             }
-            if ( $rel > 86400 ) {
-                $rel -= 86400;
-            }
             return $rel;
         };
         
@@ -221,11 +218,15 @@ class Moments extends Model
             $minStart = min($normStarts);
             $maxStart = max($normStarts);
             $avgStart = array_sum($normStarts) / count($normStarts);
+            if ( $minStart > 86400 ) $minStart -= 86400;
+            if ( $maxStart > 86400 ) $maxStart -= 86400;
             
             // Statistieken voor stoppen
             $minStop = min($normStops);
             $maxStop = max($normStops);
             $avgStop = array_sum($normStops) / count($normStops);
+            if ( $minStop > 86400 ) $minStop -= 86400;
+            if ( $maxStop > 86400 ) $maxStop -= 86400;
             
             $minTime = min($intervalTime);
             $maxTime = max($intervalTime);
