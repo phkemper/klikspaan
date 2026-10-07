@@ -190,7 +190,8 @@ class Moments extends Model
             // Zorg dat het startuur altijd binnen 0-23 valt
             $timelineStartHour = ($timelineStartHour % 24 + 24) % 24;
         }
-        
+        dump($minStart);
+        dump($maxStop);
         // Tijdlijn start in absolute seconden van de dag
         $timelineStartSeconds = $timelineStartHour * 3600;
         
