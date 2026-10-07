@@ -158,6 +158,9 @@ class Moments extends Model
             } elseif ($record->state === 0 && $lastStart !== null) {
                 $startSec = $getAbsoluteSeconds($lastStart);
                 $stopSec  = $getAbsoluteSeconds($record->created_at);
+                $days = (int)floor($startSec/86400) * 86400;
+                $startSec -= $days;
+                $stopSec -= $days;
                 
                 // Als de stoptijd op de klok 'vroeger' is dan de starttijd, ging hij over middernacht heen
                 if ($stopSec <= $startSec) {
