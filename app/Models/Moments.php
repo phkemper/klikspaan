@@ -120,7 +120,7 @@ class Moments extends Model
         // 2. Kleuren
         $bgColor         = imagecolorallocate($image, 245, 247, 250);
         $mainBlockColor  = imagecolorallocate($image, 200, 205, 212);
-        $rangeBlockColor = imagecolorallocatealpha($image, 110, 120, 135, 128);
+        $rangeBlockColor = imagecolorallocatealpha($image, 110, 120, 135, 64);
         $avgLineColor    = imagecolorallocate($image, 0, 0, 0);
         $axisColor       = imagecolorallocate($image, 80, 80, 80);
         $textColor       = imagecolorallocate($image, 40, 40, 40);
