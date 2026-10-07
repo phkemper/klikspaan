@@ -179,6 +179,10 @@ class Moments extends Model
             
             $minStart = min($startSeconds);
             $maxStop  = max($stopSeconds);
+            if ( $maxStop < $minStart )
+            {
+                $maxStop += 86400;
+            }
             
             // Bepaal het midden van alle getekende data
             $centerDataSeconds = ($minStart + $maxStop) / 2;
