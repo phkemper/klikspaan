@@ -106,7 +106,7 @@ class Moments extends Model
         }
         
         // Check if the last time is a stop time. If not, remove the last one.
-        if ( $records )
+        if ( count($records) )
         {
             $lastIndex = count($records) - 1;
             if ( $records[$lastIndex]->state == 1 )
